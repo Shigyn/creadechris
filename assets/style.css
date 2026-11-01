@@ -42,7 +42,10 @@ p { margin: 0 0 1em; }
 /* ---------- boutons ---------- */
 .bouton { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 12px 24px; border-radius: 999px; font: 700 .98rem var(--t-corps); text-decoration: none; border: 1.5px solid transparent; cursor: pointer; transition: transform .2s, background-color .2s, color .2s; }
 .bouton:hover { transform: translateY(-1px); }
+.bouton svg { width: 20px; height: 20px; fill: currentColor; flex-shrink: 0; }
 .bouton-plein { background: var(--rose); color: #fff; }
+.bouton-wa { background: #1f8f4e; color: #fff; }
+.bouton-wa:hover { background: #18773f; }
 .bouton-plein:hover { background: var(--rose-fonce); }
 .bouton-ligne { border-color: currentColor; color: var(--nuit); }
 .bouton-ligne:hover { background: var(--nuit); color: var(--papier); }
@@ -109,14 +112,35 @@ p { margin: 0 0 1em; }
 .section-nuit .surtitre { color: var(--or-clair); }
 .tete-section { max-width: 720px; margin-bottom: 48px; }
 
-.creations { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-.creation-photo { aspect-ratio: 4 / 5; border-radius: var(--rayon); overflow: hidden; margin-bottom: 20px; box-shadow: var(--ombre); }
-.creation-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.2, .7, .2, 1); }
-.creation:hover .creation-photo img { transform: scale(1.04); }
-.creation p { color: var(--gris); }
-.note-sur-mesure { margin: 44px 0 0; padding: 18px 24px; border: 1.5px dashed var(--or); border-radius: var(--rayon); text-align: center; color: var(--gris); }
+/* Une creation par rangee, photos et texte en alternance. */
+.creations { display: grid; gap: clamp(72px, 10vw, 128px); }
+.creation { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: center; }
+.creation-inverse .creation-photos { order: 2; }
+.creation-photos { position: relative; padding-bottom: 8%; }
+.cp { margin: 0; overflow: hidden; border-radius: var(--rayon); box-shadow: var(--ombre); }
+.cp img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s cubic-bezier(.2, .7, .2, 1); }
+.creation:hover .cp1 img { transform: scale(1.03); }
+.cp1 { width: 76%; aspect-ratio: 4 / 5; }
+.cp2, .cp3 { position: absolute; border: 6px solid var(--papier); }
+.cp2 { right: 0; bottom: 0; width: 42%; aspect-ratio: 3 / 4; transform: rotate(3deg); }
+.cp3 { right: 6%; top: 6%; width: 32%; aspect-ratio: 1; transform: rotate(-4deg); }
+.creation-inverse .cp1 { margin-left: auto; }
+.creation-inverse .cp2 { right: auto; left: 0; transform: rotate(-3deg); }
+.creation-inverse .cp3 { right: auto; left: 6%; transform: rotate(4deg); }
+.creation-eti { display: inline-block; margin-bottom: 14px; padding: 5px 14px; border-radius: 999px; border: 1.5px dashed var(--or); color: var(--or); font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.creation h3 { font-size: clamp(2rem, 3.6vw, 2.8rem); }
+.creation h3 em { font-style: italic; color: var(--rose); }
+.creation-texte > p { color: var(--gris); max-width: 46ch; font-size: 1.06rem; }
+.creation-points { list-style: none; margin: 0 0 28px; padding: 0; display: grid; gap: 10px; }
+.creation-points li { display: flex; align-items: flex-start; gap: 10px; font-weight: 600; }
+.creation-points svg { width: 22px; height: 22px; flex-shrink: 0; padding: 3px; border-radius: 50%; background: var(--poudre); fill: var(--rose); }
+.note-sur-mesure { margin: clamp(56px, 8vw, 96px) 0 0; padding: 18px 24px; border: 1.5px dashed var(--or); border-radius: var(--rayon); text-align: center; color: var(--gris); }
 .note-sur-mesure a { color: var(--rose); font-weight: 700; }
-@media (max-width: 900px) { .creations { grid-template-columns: 1fr; max-width: 520px; } }
+@media (max-width: 860px) {
+  .creation { grid-template-columns: 1fr; }
+  .creation-inverse .creation-photos { order: 0; }
+  .creation-photos { max-width: 520px; }
+}
 
 /* ---------- l'atelier de broderie ---------- */
 .atelier { display: grid; grid-template-columns: 1fr 1fr; grid-template-areas: "texte rendu" "reglages rendu"; column-gap: clamp(32px, 6vw, 88px); align-items: center; }
@@ -189,12 +213,27 @@ p { margin: 0 0 1em; }
 .commande { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(32px, 6vw, 88px); align-items: start; }
 .commande-texte p { color: rgba(251, 246, 244, .78); max-width: 46ch; }
 .commande-aide a { color: var(--or-clair); font-weight: 700; }
-.formulaire { display: grid; gap: 16px; padding: clamp(22px, 4vw, 36px); border-radius: var(--rayon); background: var(--papier); color: var(--nuit); box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .5); outline: 1.5px dashed var(--or); outline-offset: -10px; }
-.formulaire .deux { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.formulaire .bouton { justify-self: start; }
-.formulaire-retour { margin: 0; padding: 12px 16px; border-radius: 12px; background: var(--poudre); white-space: pre-line; font-size: .95rem; }
+.commande-choix { display: grid; gap: 12px; }
+.commande-choix a { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; border-radius: var(--rayon); background: rgba(251, 246, 244, .06); border: 1.5px dashed rgba(226, 201, 143, .45); text-decoration: none; font: 500 1.2rem/1.25 var(--t-display); transition: background-color .2s, border-color .2s; }
+.commande-choix a:hover { background: rgba(251, 246, 244, .12); border-color: var(--or-clair); }
+.commande-choix svg { width: 26px; height: 26px; flex-shrink: 0; fill: #4cc47f; }
 @media (max-width: 860px) { .commande { grid-template-columns: 1fr; } }
-@media (max-width: 520px) { .formulaire .deux { grid-template-columns: 1fr; } .formulaire .bouton { justify-self: stretch; } }
+
+/* La fenetre de commande. */
+.fenetre { width: min(560px, 100% - 24px); max-height: calc(100dvh - 24px); padding: 0; border: 0; border-radius: var(--rayon); background: transparent; color: var(--nuit); overflow: auto; }
+.fenetre::backdrop { background: rgba(36, 34, 47, .6); backdrop-filter: blur(3px); }
+.fenetre[open] { animation: ouvre .35s cubic-bezier(.2, .7, .2, 1); }
+@keyframes ouvre { from { opacity: 0; transform: translateY(16px); } }
+.formulaire { position: relative; display: grid; gap: 14px; padding: clamp(24px, 5vw, 36px); border-radius: var(--rayon); background: var(--papier); outline: 1.5px dashed var(--or); outline-offset: -10px; }
+.formulaire h2 { font-size: clamp(1.6rem, 5vw, 2.1rem); margin-bottom: 4px; }
+.formulaire .surtitre { color: #1f8f4e; margin-bottom: 0; padding-right: 44px; }
+.formulaire .surtitre svg { fill: currentColor; }
+.formulaire .deux { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.formulaire .bouton { margin-top: 6px; }
+.fenetre-note { margin: 0; font-size: .88rem; color: var(--gris); }
+.fenetre-fermer { position: absolute; top: 14px; right: 14px; width: 40px; height: 40px; border: 0; border-radius: 50%; background: var(--poudre); color: var(--nuit); font-size: 1.5rem; line-height: 1; cursor: pointer; }
+@media (max-width: 520px) { .formulaire .deux { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .fenetre[open] { animation: none; } }
 
 /* ---------- pied ---------- */
 .pied { background: #24222f; color: rgba(251, 246, 244, .75); padding: 64px 0 96px; font-size: .95rem; }
@@ -209,7 +248,7 @@ p { margin: 0 0 1em; }
 .lien-locweb { color: rgba(226, 201, 143, .55); }
 @media (max-width: 760px) { .pied-haut { grid-template-columns: 1fr; } }
 
-.flottant { position: fixed; right: 18px; bottom: 18px; z-index: 40; display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px 12px 14px; border-radius: 999px; background: var(--rose); color: #fff; text-decoration: none; font-weight: 700; box-shadow: 0 14px 30px -12px rgba(150, 64, 90, .6); }
+.flottant { position: fixed; right: 18px; bottom: 18px; z-index: 40; display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px 12px 14px; border-radius: 999px; background: #1f8f4e; color: #fff; text-decoration: none; font-weight: 700; box-shadow: 0 14px 30px -12px rgba(20, 90, 50, .6); }
 .flottant svg { width: 22px; height: 22px; fill: currentColor; }
 
 /* ---------- pages de texte ---------- */

@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..600,100;1,9..144,400..600,100&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&family=Allura&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=3">
+<link rel="stylesheet" href="assets/style.css?v=4">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"LocalBusiness","@id":"https://shigyn.github.io/creadechris/#entreprise","name":"Créa de Chris","alternateName":"Les Créas de Chris","description":"Couture pour enfants faite main à Lançon-de-Provence : sacs à dos brodés au prénom, ensembles crèche et maternelle (sac, doudou, snood), doudous.","slogan":"100 % fait main et avec amour","url":"https://shigyn.github.io/creadechris/","image":"https://shigyn.github.io/creadechris/photos/partage.jpg","founder":{"@type":"Person","name":"Christelle Poupardin"},"address":{"@type":"PostalAddress","addressLocality":"Lançon-de-Provence","postalCode":"13680","addressRegion":"Provence-Alpes-Côte d’Azur","addressCountry":"FR"},"areaServed":[{"@type":"Place","name":"Lançon-de-Provence"},{"@type":"Place","name":"Salon-de-Provence"},{"@type":"Place","name":"Pélissanne"},{"@type":"Place","name":"La Fare-les-Oliviers"},{"@type":"Place","name":"Rognac"},{"@type":"Place","name":"Berre-l’Étang"},{"@type":"Place","name":"Bouches-du-Rhône"}],"sameAs":["https://www.facebook.com/christelle.poupardin.5"],"makesOffer":[{"@type":"Offer","itemOffered":{"@type":"Product","name":"Sac à dos enfant brodé au prénom"}},{"@type":"Offer","itemOffered":{"@type":"Product","name":"Ensemble crèche et maternelle"}},{"@type":"Offer","itemOffered":{"@type":"Product","name":"Doudou fait main"}},{"@type":"Offer","itemOffered":{"@type":"Product","name":"Snood enfant"}}]},{"@type":"WebSite","url":"https://shigyn.github.io/creadechris/","name":"Créa de Chris","inLanguage":"fr-FR"}]}</script>
 </head>
 <body class="accueil">
@@ -38,7 +38,7 @@
       <a href="#chris">Qui suis-je</a>
       <a href="#commander">Commander</a>
     </nav>
-    <a class="bouton bouton-plein entete-cta" href="#commander">Passer commande</a>
+    <a class="bouton bouton-plein entete-cta" href="#commander" data-commander="">Passer commande</a>
     <button class="burger" type="button" aria-expanded="false" aria-controls="menu-mobile" aria-label="Ouvrir le menu"><span></span><span></span></button>
   </div>
   <div class="menu-mobile" id="menu-mobile" hidden>
@@ -47,7 +47,7 @@
     <a href="#comment">Comment ça marche</a>
     <a href="#chris">Qui suis-je</a>
     <a href="#commander">Commander</a>
-    <a class="bouton bouton-plein" href="#commander">Passer commande</a>
+    <a class="bouton bouton-plein" href="#commander" data-commander="">Passer commande</a>
   </div>
 </header>
 
@@ -77,26 +77,48 @@
       <p class="chapo">Chaque pièce est cousue à la commande, dans le tissu que vous choisissez : leurs héros préférés, des motifs tout doux ou des unis.</p>
     </div>
     <div class="creations">
-      <article class="creation reveler">
-        <div class="creation-photo"><img src="photos/enfant-sac-a-dos-allee-800.webp" srcset="photos/enfant-sac-a-dos-allee-800.webp 800w, photos/enfant-sac-a-dos-allee-1600.webp 1600w" sizes="(min-width: 900px) 30vw, 90vw" alt="Enfant de dos avec son petit sac à dos" width="1600" height="1066" loading="lazy" decoding="async"></div>
-        <h3>Le sac à dos à son prénom</h3>
-        <p>Le petit sac pour la crèche ou l’école, avec son rabat brodé au prénom de l’enfant. Il le reconnaît du premier coup d’œil, et il ne se perd plus.</p>
-        <a class="lien-fleche" href="#commander" data-modele="sac">Le commander <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 5.3 19.9 12l-6.7 6.7-1.4-1.4 4.3-4.3H4v-2h12.1l-4.3-4.3z"/></svg></a>
+      <article class="creation creation-sac">
+        <div class="creation-photos photos-2 reveler">
+          <figure class="cp cp1"><img src="photos/enfant-sac-a-dos-allee-800.webp" srcset="photos/enfant-sac-a-dos-allee-800.webp 800w, photos/enfant-sac-a-dos-allee-1600.webp 1600w" sizes="(min-width: 900px) 40vw, 90vw" alt="Enfant de dos avec son petit sac à dos" width="1600" height="1066" loading="lazy" decoding="async"></figure>
+          <figure class="cp cp2"><img src="photos/enfant-sac-a-dos-cire-jaune-800.webp" srcset="photos/enfant-sac-a-dos-cire-jaune-800.webp 800w, photos/enfant-sac-a-dos-cire-jaune-1600.webp 1600w" sizes="(min-width: 900px) 22vw, 45vw" alt="Enfant en ciré jaune avec son sac à dos" width="1600" height="2400" loading="lazy" decoding="async"></figure>
+        </div>
+        <div class="creation-texte reveler">
+          <p class="creation-eti">Le plus demandé</p>
+          <h3>Le sac à dos <em>à son prénom</em></h3>
+          <p>Le petit sac pour la crèche ou l’école, avec son rabat brodé au prénom de l’enfant. Il le reconnaît du premier coup d’œil, et il ne se perd plus.</p>
+          <ul class="creation-points"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 16.6 4.9 12l-1.4 1.4 6 6 11-11-1.4-1.4z"/></svg><span>Rabat brodé au prénom</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 16.6 4.9 12l-1.4 1.4 6 6 11-11-1.4-1.4z"/></svg><span>Taille pensée pour les petits dos</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 16.6 4.9 12l-1.4 1.4 6 6 11-11-1.4-1.4z"/></svg><span>Tissu au choix : ses héros, des motifs, des unis</span></li></ul>
+          <a class="bouton bouton-plein" href="#commander" data-commander="sac"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.8 11.8 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg> Commander</a>
+        </div>
       </article>
-      <article class="creation reveler">
-        <div class="creation-photo"><img src="photos/sac-a-dos-pose-800.webp" srcset="photos/sac-a-dos-pose-800.webp 800w, photos/sac-a-dos-pose-1600.webp 1600w" sizes="(min-width: 900px) 30vw, 90vw" alt="Petit sac à dos posé sur une table" width="1600" height="2124" loading="lazy" decoding="async"></div>
-        <h3>L’ensemble crèche & maternelle</h3>
-        <p>Le sac à dos, son doudou et son snood, cousus dans le même tissu : tout ce qu’il faut pour la rentrée, assorti et prêt à partir.</p>
-        <a class="lien-fleche" href="#commander" data-modele="ensemble">Le commander <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 5.3 19.9 12l-6.7 6.7-1.4-1.4 4.3-4.3H4v-2h12.1l-4.3-4.3z"/></svg></a>
+      <article class="creation creation-ensemble creation-inverse">
+        <div class="creation-photos photos-3 reveler">
+          <figure class="cp cp1"><img src="photos/sac-a-dos-pose-800.webp" srcset="photos/sac-a-dos-pose-800.webp 800w, photos/sac-a-dos-pose-1600.webp 1600w" sizes="(min-width: 900px) 40vw, 90vw" alt="Petit sac à dos posé sur une table" width="1600" height="2124" loading="lazy" decoding="async"></figure>
+          <figure class="cp cp2"><img src="photos/doudou-elephant-800.webp" srcset="photos/doudou-elephant-800.webp 800w, photos/doudou-elephant-1600.webp 1600w" sizes="(min-width: 900px) 22vw, 45vw" alt="Doudou éléphant en tissu" width="1600" height="2845" loading="lazy" decoding="async"></figure>
+          <figure class="cp cp3"><img src="photos/tissus-plies-800.webp" srcset="photos/tissus-plies-800.webp 800w, photos/tissus-plies-1600.webp 1600w" sizes="(min-width: 900px) 22vw, 45vw" alt="Tissus colorés pliés" width="1600" height="2134" loading="lazy" decoding="async"></figure>
+        </div>
+        <div class="creation-texte reveler">
+          <p class="creation-eti">Pour la rentrée</p>
+          <h3>L’ensemble <em>crèche &amp; maternelle</em></h3>
+          <p>Le sac à dos, son doudou et son snood, cousus dans le même tissu : tout ce qu’il faut pour la crèche ou l’entrée en maternelle, assorti et prêt à partir.</p>
+          <ul class="creation-points"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 16.6 4.9 12l-1.4 1.4 6 6 11-11-1.4-1.4z"/></svg><span>Sac à dos brodé au prénom</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 16.6 4.9 12l-1.4 1.4 6 6 11-11-1.4-1.4z"/></svg><span>Doudou et snood assortis</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 16.6 4.9 12l-1.4 1.4 6 6 11-11-1.4-1.4z"/></svg><span>Les trois dans le même tissu</span></li></ul>
+          <a class="bouton bouton-plein" href="#commander" data-commander="ensemble"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.8 11.8 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg> Commander</a>
+        </div>
       </article>
-      <article class="creation reveler">
-        <div class="creation-photo"><img src="photos/doudous-lapins-panier-800.webp" srcset="photos/doudous-lapins-panier-800.webp 800w, photos/doudous-lapins-panier-1600.webp 1600w" sizes="(min-width: 900px) 30vw, 90vw" alt="Doudous lapins en tissu dans un panier" width="1600" height="2395" loading="lazy" decoding="async"></div>
-        <h3>Les doudous</h3>
-        <p>Tout doux, faits pour être serrés fort et traîner partout. Dans le tissu de votre choix, assortis au sac si vous le souhaitez.</p>
-        <a class="lien-fleche" href="#commander" data-modele="doudou">Le commander <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 5.3 19.9 12l-6.7 6.7-1.4-1.4 4.3-4.3H4v-2h12.1l-4.3-4.3z"/></svg></a>
+      <article class="creation creation-doudou">
+        <div class="creation-photos photos-2 reveler">
+          <figure class="cp cp1"><img src="photos/doudous-lapins-panier-800.webp" srcset="photos/doudous-lapins-panier-800.webp 800w, photos/doudous-lapins-panier-1600.webp 1600w" sizes="(min-width: 900px) 40vw, 90vw" alt="Doudous lapins en tissu dans un panier" width="1600" height="2395" loading="lazy" decoding="async"></figure>
+          <figure class="cp cp2"><img src="photos/linge-bebe-panier-800.webp" srcset="photos/linge-bebe-panier-800.webp 800w, photos/linge-bebe-panier-1600.webp 1600w" sizes="(min-width: 900px) 22vw, 45vw" alt="Linge doux pour bébé dans un panier" width="1600" height="2130" loading="lazy" decoding="async"></figure>
+        </div>
+        <div class="creation-texte reveler">
+          <p class="creation-eti">Le compagnon</p>
+          <h3>Le doudou <em>tout doux</em></h3>
+          <p>Fait pour être serré fort et traîner partout. Dans le tissu de votre choix, assorti à son sac si vous le souhaitez.</p>
+          <ul class="creation-points"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 16.6 4.9 12l-1.4 1.4 6 6 11-11-1.4-1.4z"/></svg><span>Cousu main, pièce unique</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 16.6 4.9 12l-1.4 1.4 6 6 11-11-1.4-1.4z"/></svg><span>Tissu au choix</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 16.6 4.9 12l-1.4 1.4 6 6 11-11-1.4-1.4z"/></svg><span>Assorti au sac sur demande</span></li></ul>
+          <a class="bouton bouton-plein" href="#commander" data-commander="doudou"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.8 11.8 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg> Commander</a>
+        </div>
       </article>
     </div>
-    <p class="note-sur-mesure reveler">Une autre idée en tête ? Trousse, sac de change, cadeau de naissance… <a href="#commander" data-modele="autre">Demandez-moi</a>, on en parle.</p>
+    <p class="note-sur-mesure reveler">Une autre idée en tête ? Trousse, sac de change, cadeau de naissance… <a href="#commander" data-commander="autre">Demandez-moi</a>, on en parle.</p>
   </div>
 </section>
 
@@ -114,7 +136,7 @@
           <div class="sac-rabat"><span class="broderie" data-broderie>Léna</span></div>
         </div>
       </div>
-      <a class="bouton bouton-plein" href="#commander" data-depuis-atelier>Commander avec ce prénom</a>
+      <a class="bouton bouton-plein" href="#commander" data-commander="sac" data-depuis-atelier><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.8 11.8 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg> Commander avec ce prénom</a>
     </div>
       <form class="atelier-reglages reveler" data-atelier onsubmit="return false">
         <label class="champ"><span>Son prénom</span><input type="text" name="prenom" maxlength="12" value="Léna" autocomplete="off" spellcheck="false" data-atelier-prenom></label>
@@ -165,30 +187,15 @@
     <div class="commande-texte reveler">
       <p class="surtitre"><svg class="fil" viewBox="0 0 140 24" aria-hidden="true"><path d="M2 14c18-12 30 8 48-2s30-10 46 2 28 4 42-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="5 5"/></svg> Commander</p>
       <h2>Votre demande, <em>en une minute</em></h2>
-      <p>Remplissez ces quelques lignes : je vous réponds avec le prix et le délai. Rien n’est engagé tant que vous n’avez pas dit oui.</p>
-      <p class="commande-aide">Vous préférez en parler directement ? <a href="https://m.me/christelle.poupardin.5" target="_blank" rel="noopener">Écrivez-moi sur Messenger</a>.</p>
+      <p>Choisissez votre création : le message WhatsApp s’écrit tout seul, vous n’avez plus qu’à l’envoyer. Je vous réponds avec le prix et le délai, et rien n’est engagé tant que vous n’avez pas dit oui.</p>
+      <p class="commande-aide">Vous préférez Messenger ? <a href="https://m.me/christelle.poupardin.5" target="_blank" rel="noopener">Écrivez-moi ici</a>.</p>
     </div>
-    <form class="formulaire reveler" data-commande novalidate>
-      <label class="champ"><span>Ce que vous voulez</span>
-        <select name="modele" data-commande-modele>
-          <option value="sac">Un sac à dos à son prénom</option>
-          <option value="ensemble">L’ensemble crèche &amp; maternelle (sac, doudou, snood)</option>
-          <option value="doudou">Un doudou</option>
-          <option value="autre">Autre chose</option>
-        </select>
-      </label>
-      <div class="deux">
-        <label class="champ"><span>Son prénom</span><input type="text" name="prenom" maxlength="20" data-commande-prenom></label>
-        <label class="champ"><span>Pour quand ?</span><input type="text" name="quand" placeholder="ex. la rentrée de janvier"></label>
-      </div>
-      <label class="champ"><span>Tissu, couleurs, ses héros préférés…</span><textarea name="details" rows="3" data-commande-details></textarea></label>
-      <div class="deux">
-        <label class="champ"><span>Votre prénom</span><input type="text" name="nom" autocomplete="given-name" required></label>
-        <label class="champ"><span>Votre téléphone</span><input type="tel" name="tel" autocomplete="tel" required></label>
-      </div>
-      <button class="bouton bouton-or" type="submit">Envoyer ma demande</button>
-      <p class="formulaire-retour" data-commande-retour role="status" hidden></p>
-    </form>
+    <div class="commande-choix reveler">
+      <a href="#commander" data-commander="sac"><span>Un sac à dos à son prénom</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.8 11.8 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg></a>
+      <a href="#commander" data-commander="ensemble"><span>L’ensemble crèche &amp; maternelle (sac, doudou, snood)</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.8 11.8 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg></a>
+      <a href="#commander" data-commander="doudou"><span>Un doudou</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.8 11.8 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg></a>
+      <a href="#commander" data-commander="autre"><span>Autre chose</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.8 11.8 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg></a>
+    </div>
   </div>
 </section>
 </main>
@@ -201,7 +208,7 @@
     </div>
     <div>
       <h2 class="pied-titre">Me joindre</h2>
-      <p><a href="https://m.me/christelle.poupardin.5" target="_blank" rel="noopener">Par Messenger</a><br><a href="https://www.facebook.com/christelle.poupardin.5" target="_blank" rel="noopener">Ma page Facebook</a></p>
+      <p><a href="https://wa.me/" target="_blank" rel="noopener">Par WhatsApp</a><br><a href="https://m.me/christelle.poupardin.5" target="_blank" rel="noopener">Par Messenger</a></p>
     </div>
     <div>
       <h2 class="pied-titre">Me suivre</h2>
@@ -214,7 +221,28 @@
   </div>
 </footer>
 
-<a class="flottant" href="https://m.me/christelle.poupardin.5" target="_blank" rel="noopener" aria-label="M’écrire sur Messenger"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.5 2 2 6.1 2 11.3c0 2.9 1.4 5.5 3.7 7.2V22l3.4-1.9c.9.3 1.9.4 2.9.4 5.5 0 10-4.1 10-9.2S17.5 2 12 2zm1 12.4-2.5-2.7-5 2.7 5.5-5.8 2.6 2.7 4.9-2.7z"/></svg><span>M’écrire</span></a>
+<a class="flottant" href="#commander" data-commander="" aria-label="Commander sur WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.8 11.8 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg><span>Commander</span></a>
+
+<dialog class="fenetre" data-fenetre aria-labelledby="fenetre-titre">
+  <form class="formulaire" data-commande data-wa="" novalidate>
+    <button class="fenetre-fermer" type="button" data-fermer aria-label="Fermer">×</button>
+    <p class="surtitre"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.8 11.8 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg> Commander sur WhatsApp</p>
+    <h2 id="fenetre-titre">Votre demande, <em>prête à envoyer</em></h2>
+    <label class="champ"><span>Ce que vous voulez</span>
+      <select name="modele" data-commande-modele>
+        <option value="sac">Un sac à dos à son prénom</option><option value="ensemble">L’ensemble crèche &amp; maternelle (sac, doudou, snood)</option><option value="doudou">Un doudou</option><option value="autre">Autre chose</option>
+      </select>
+    </label>
+    <div class="deux">
+      <label class="champ"><span>Son prénom à broder</span><input type="text" name="prenom" maxlength="20" data-commande-prenom></label>
+      <label class="champ"><span>Pour quand ?</span><input type="text" name="quand" placeholder="ex. la rentrée de janvier"></label>
+    </div>
+    <label class="champ"><span>Tissu, couleurs, ses héros préférés…</span><textarea name="details" rows="3" data-commande-details></textarea></label>
+    <label class="champ"><span>Votre prénom</span><input type="text" name="nom" autocomplete="given-name"></label>
+    <button class="bouton bouton-wa" type="submit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.8 11.8 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg> Envoyer sur WhatsApp</button>
+    <p class="fenetre-note">WhatsApp s’ouvre avec votre message déjà écrit : vous n’avez plus qu’à appuyer sur envoyer. Rien n’est engagé, je vous réponds avec le prix et le délai.</p>
+  </form>
+</dialog>
 
 <script>
   window.LOCWEB_CONFIG = {
@@ -225,6 +253,6 @@
   };
 </script>
 <script src="mesure.js" defer></script>
-<script src="assets/site.js?v=3" defer></script>
+<script src="assets/site.js?v=4" defer></script>
 </body>
 </html>

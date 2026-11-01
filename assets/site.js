@@ -69,50 +69,48 @@
     maj();
   }
 
-  /* La demande de commande. */
+  /* La commande : chaque bouton « Commander » ouvre la fenetre, deja
+     remplie avec la creation choisie (et le prenom essaye plus haut). */
+  var fenetre = document.querySelector('[data-fenetre]');
   var form = document.querySelector('[data-commande]');
-  var choixModele = document.querySelector('[data-commande-modele]');
-  var champCmdPrenom = document.querySelector('[data-commande-prenom]');
-  var champDetails = document.querySelector('[data-commande-details]');
-  document.addEventListener('click', function (e) {
-    var a = e.target.closest('[data-modele]');
-    if (a && choixModele) choixModele.value = a.getAttribute('data-modele');
-    if (e.target.closest('[data-depuis-atelier]') && reglages) {
-      var f = new FormData(reglages);
-      var nomDe = function (nom) { var x = reglages.querySelector('input[name="' + nom + '"]:checked'); return x ? x.parentNode.querySelector('.nom').textContent : ''; };
-      choixModele.value = 'sac';
-      if (champPrenom.value.trim()) champCmdPrenom.value = champPrenom.value.trim();
-      champDetails.value = 'Tissu ' + nomDe('tissu').toLowerCase() + ', fil ' + nomDe('fil').toLowerCase() + ', écriture ' + (f.get('ecriture') === 'baton' ? 'bâton' : 'attachée') + '.';
-    }
-  });
+  if (fenetre && form) {
+    var choixModele = form.querySelector('[data-commande-modele]');
+    var champCmdPrenom = form.querySelector('[data-commande-prenom]');
+    var champDetails = form.querySelector('[data-commande-details]');
 
-  if (form) {
-    var retour = form.querySelector('[data-commande-retour]');
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('[data-commander]');
+      if (!a || !fenetre.showModal) return;
+      e.preventDefault();
+      var modele = a.getAttribute('data-commander');
+      if (modele) choixModele.value = modele;
+      if (a.hasAttribute('data-depuis-atelier') && reglages) {
+        var f = new FormData(reglages);
+        var nomDe = function (nom) { var x = reglages.querySelector('input[name="' + nom + '"]:checked'); return x ? x.parentNode.querySelector('.nom').textContent : ''; };
+        if (champPrenom.value.trim()) champCmdPrenom.value = champPrenom.value.trim();
+        champDetails.value = 'Tissu ' + nomDe('tissu').toLowerCase() + ', fil ' + nomDe('fil').toLowerCase() + ', écriture ' + (f.get('ecriture') === 'baton' ? 'bâton' : 'attachée') + '.';
+      }
+      if (menu && !menu.hidden) burger.click();
+      fenetre.showModal();
+      (champCmdPrenom.value ? champDetails : champCmdPrenom).focus();
+    });
+    fenetre.querySelector('[data-fermer]').addEventListener('click', function () { fenetre.close(); });
+    fenetre.addEventListener('click', function (e) { if (e.target === fenetre) fenetre.close(); });
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var f = new FormData(form);
-      if (!String(f.get('nom')).trim() || !String(f.get('tel')).trim()) {
-        retour.hidden = false;
-        retour.textContent = 'Indiquez votre prénom et votre téléphone pour que je puisse vous répondre.';
-        return;
-      }
       var lignes = [
-        'Bonjour Chris, je viens de votre site.',
+        'Bonjour Chris, je viens de votre site 🧵',
         'Je voudrais : ' + choixModele.options[choixModele.selectedIndex].text,
         f.get('prenom') ? 'Prénom à broder : ' + f.get('prenom') : '',
         f.get('quand') ? 'Pour : ' + f.get('quand') : '',
         f.get('details') ? 'Détails : ' + f.get('details') : '',
-        'Moi : ' + f.get('nom') + ', ' + f.get('tel'),
+        f.get('nom') ? 'Merci ! ' + f.get('nom') : 'Merci !',
       ].filter(Boolean).join('\n');
-      // Apercu : pas encore de boite de reception branchee, la demande part par Messenger.
-      var ouvrir = function () { window.open('https://m.me/christelle.poupardin.5', '_blank', 'noopener'); };
-      retour.hidden = false;
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(lignes).then(function () {
-          retour.textContent = 'Votre demande est copiée : collez-la dans la conversation Messenger qui s’ouvre.';
-          ouvrir();
-        }, function () { retour.textContent = lignes; ouvrir(); });
-      } else { retour.textContent = lignes; ouvrir(); }
+      var numero = form.getAttribute('data-wa') || '';
+      window.open('https://wa.me/' + numero + '?text=' + encodeURIComponent(lignes), '_blank', 'noopener');
+      fenetre.close();
     });
   }
 })();

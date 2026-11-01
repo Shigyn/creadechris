@@ -15,7 +15,7 @@ const ICI = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Z]:)
 const PROD = process.env.PROD === '1';
 const URL_SITE = PROD ? 'https://www.creadechris.fr/' : 'https://shigyn.github.io/creadechris/';
 const PHOTOS = JSON.parse(fs.readFileSync(path.join(ICI, '_source', 'photos.json'), 'utf8'));
-const V = '3';
+const V = '4';
 
 const E = {
   nom: 'Créa de Chris',
@@ -29,6 +29,9 @@ const E = {
   departement: 'Bouches-du-Rhône',
   facebook: 'https://www.facebook.com/christelle.poupardin.5',
   messenger: 'https://m.me/christelle.poupardin.5',
+  // Son numero WhatsApp, format international sans + (ex. 33612345678).
+  // Vide tant qu'on ne l'a pas : WhatsApp s'ouvre et le client choisit le contact.
+  whatsapp: '',
 };
 
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -45,6 +48,8 @@ const I = {
   pin: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>',
   fb: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.3H7.4V14h2.7v8z"/></svg>',
   msg: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.5 2 2 6.1 2 11.3c0 2.9 1.4 5.5 3.7 7.2V22l3.4-1.9c.9.3 1.9.4 2.9.4 5.5 0 10-4.1 10-9.2S17.5 2 12 2zm1 12.4-2.5-2.7-5 2.7 5.5-5.8 2.6 2.7 4.9-2.7z"/></svg>',
+  wa: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.8 11.8 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>',
+  ok: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 16.6 4.9 12l-1.4 1.4 6 6 11-11-1.4-1.4z"/></svg>',
   // Une aiguillee : le fil qui court entre les sections.
   fil: '<svg class="fil" viewBox="0 0 140 24" aria-hidden="true"><path d="M2 14c18-12 30 8 48-2s30-10 46 2 28 4 42-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="5 5"/></svg>',
 };
@@ -52,10 +57,30 @@ const I = {
 /* Ce qu'elle coud, d'apres ses publications. Pas de prix : elle les donne
    a la demande (a lui faire confirmer avant la mise en ligne). */
 const CREATIONS = [
-  { id: 'sac', photo: 'enfant-sac-a-dos-allee', alt: 'Enfant de dos avec son petit sac à dos', titre: 'Le sac à dos à son prénom', texte: 'Le petit sac pour la crèche ou l’école, avec son rabat brodé au prénom de l’enfant. Il le reconnaît du premier coup d’œil, et il ne se perd plus.' },
-  { id: 'ensemble', photo: 'sac-a-dos-pose', alt: 'Petit sac à dos posé sur une table', titre: 'L’ensemble crèche & maternelle', texte: 'Le sac à dos, son doudou et son snood, cousus dans le même tissu : tout ce qu’il faut pour la rentrée, assorti et prêt à partir.' },
-  { id: 'doudou', photo: 'doudous-lapins-panier', alt: 'Doudous lapins en tissu dans un panier', titre: 'Les doudous', texte: 'Tout doux, faits pour être serrés fort et traîner partout. Dans le tissu de votre choix, assortis au sac si vous le souhaitez.' },
+  {
+    id: 'sac', nom: 'Un sac à dos à son prénom', eti: 'Le plus demandé',
+    photos: [['enfant-sac-a-dos-allee', 'Enfant de dos avec son petit sac à dos'], ['enfant-sac-a-dos-cire-jaune', 'Enfant en ciré jaune avec son sac à dos']],
+    titre: 'Le sac à dos <em>à son prénom</em>',
+    texte: 'Le petit sac pour la crèche ou l’école, avec son rabat brodé au prénom de l’enfant. Il le reconnaît du premier coup d’œil, et il ne se perd plus.',
+    points: ['Rabat brodé au prénom', 'Taille pensée pour les petits dos', 'Tissu au choix : ses héros, des motifs, des unis'],
+  },
+  {
+    id: 'ensemble', nom: 'L’ensemble crèche & maternelle (sac, doudou, snood)', eti: 'Pour la rentrée',
+    photos: [['sac-a-dos-pose', 'Petit sac à dos posé sur une table'], ['doudou-elephant', 'Doudou éléphant en tissu'], ['tissus-plies', 'Tissus colorés pliés']],
+    titre: 'L’ensemble <em>crèche &amp; maternelle</em>',
+    texte: 'Le sac à dos, son doudou et son snood, cousus dans le même tissu : tout ce qu’il faut pour la crèche ou l’entrée en maternelle, assorti et prêt à partir.',
+    points: ['Sac à dos brodé au prénom', 'Doudou et snood assortis', 'Les trois dans le même tissu'],
+  },
+  {
+    id: 'doudou', nom: 'Un doudou', eti: 'Le compagnon',
+    photos: [['doudous-lapins-panier', 'Doudous lapins en tissu dans un panier'], ['linge-bebe-panier', 'Linge doux pour bébé dans un panier']],
+    titre: 'Le doudou <em>tout doux</em>',
+    texte: 'Fait pour être serré fort et traîner partout. Dans le tissu de votre choix, assorti à son sac si vous le souhaitez.',
+    points: ['Cousu main, pièce unique', 'Tissu au choix', 'Assorti au sac sur demande'],
+  },
 ];
+const WA = `https://wa.me/${E.whatsapp}`;
+const NOMS_MODELES =[...CREATIONS.map((c) => [c.id, c.nom]), ['autre', 'Autre chose']];
 const TISSUS = [['rose', 'Rose poudré'], ['nuit', 'Bleu nuit'], ['lin', 'Lin naturel'], ['sauge', 'Vert sauge']];
 const FILS = [['blanc', 'Blanc'], ['or', 'Doré'], ['rose', 'Rose'], ['nuit', 'Bleu nuit']];
 
@@ -118,12 +143,12 @@ ${PROD ? '' : '<meta name="robots" content="noindex,nofollow">\n'}<link rel="can
     <nav class="nav" aria-label="Navigation principale">
       ${NAV.map(([h, t]) => `<a href="${lien(h)}">${t}</a>`).join('\n      ')}
     </nav>
-    <a class="bouton bouton-plein entete-cta" href="${lien('#commander')}">Passer commande</a>
+    <a class="bouton bouton-plein entete-cta" href="${lien('#commander')}" data-commander="">Passer commande</a>
     <button class="burger" type="button" aria-expanded="false" aria-controls="menu-mobile" aria-label="Ouvrir le menu"><span></span><span></span></button>
   </div>
   <div class="menu-mobile" id="menu-mobile" hidden>
     ${NAV.map(([h, t]) => `<a href="${lien(h)}">${t}</a>`).join('\n    ')}
-    <a class="bouton bouton-plein" href="${lien('#commander')}">Passer commande</a>
+    <a class="bouton bouton-plein" href="${lien('#commander')}" data-commander="">Passer commande</a>
   </div>
 </header>
 
@@ -139,7 +164,7 @@ ${corps(r)}
     </div>
     <div>
       <h2 class="pied-titre">Me joindre</h2>
-      <p><a href="${E.messenger}" target="_blank" rel="noopener">Par Messenger</a><br><a href="${E.facebook}" target="_blank" rel="noopener">Ma page Facebook</a></p>
+      <p><a href="${WA}" target="_blank" rel="noopener">Par WhatsApp</a><br><a href="${E.messenger}" target="_blank" rel="noopener">Par Messenger</a></p>
     </div>
     <div>
       <h2 class="pied-titre">Me suivre</h2>
@@ -152,7 +177,28 @@ ${corps(r)}
   </div>
 </footer>
 
-<a class="flottant" href="${E.messenger}" target="_blank" rel="noopener" aria-label="M’écrire sur Messenger">${I.msg}<span>M’écrire</span></a>
+<a class="flottant" href="${lien('#commander')}" data-commander="" aria-label="Commander sur WhatsApp">${I.wa}<span>Commander</span></a>
+
+<dialog class="fenetre" data-fenetre aria-labelledby="fenetre-titre">
+  <form class="formulaire" data-commande data-wa="${E.whatsapp}" novalidate>
+    <button class="fenetre-fermer" type="button" data-fermer aria-label="Fermer">×</button>
+    <p class="surtitre">${I.wa} Commander sur WhatsApp</p>
+    <h2 id="fenetre-titre">Votre demande, <em>prête à envoyer</em></h2>
+    <label class="champ"><span>Ce que vous voulez</span>
+      <select name="modele" data-commande-modele>
+        ${NOMS_MODELES.map(([v, t]) => `<option value="${v}">${esc(t)}</option>`).join('')}
+      </select>
+    </label>
+    <div class="deux">
+      <label class="champ"><span>Son prénom à broder</span><input type="text" name="prenom" maxlength="20" data-commande-prenom></label>
+      <label class="champ"><span>Pour quand ?</span><input type="text" name="quand" placeholder="ex. la rentrée de janvier"></label>
+    </div>
+    <label class="champ"><span>Tissu, couleurs, ses héros préférés…</span><textarea name="details" rows="3" data-commande-details></textarea></label>
+    <label class="champ"><span>Votre prénom</span><input type="text" name="nom" autocomplete="given-name"></label>
+    <button class="bouton bouton-wa" type="submit">${I.wa} Envoyer sur WhatsApp</button>
+    <p class="fenetre-note">WhatsApp s’ouvre avec votre message déjà écrit : vous n’avez plus qu’à appuyer sur envoyer. Rien n’est engagé, je vous réponds avec le prix et le délai.</p>
+  </form>
+</dialog>
 
 <script>
   window.LOCWEB_CONFIG = {
@@ -205,14 +251,20 @@ ajouter('', {
       <p class="chapo">Chaque pièce est cousue à la commande, dans le tissu que vous choisissez : leurs héros préférés, des motifs tout doux ou des unis.</p>
     </div>
     <div class="creations">
-      ${CREATIONS.map((c) => `<article class="creation reveler">
-        <div class="creation-photo">${img(r, c.photo, c.alt, { sizes: '(min-width: 900px) 30vw, 90vw' })}</div>
-        <h3>${c.titre}</h3>
-        <p>${c.texte}</p>
-        <a class="lien-fleche" href="#commander" data-modele="${c.id}">Le commander ${I.fleche}</a>
+      ${CREATIONS.map((c, n) => `<article class="creation creation-${c.id}${n % 2 ? ' creation-inverse' : ''}">
+        <div class="creation-photos photos-${c.photos.length} reveler">
+          ${c.photos.map(([p, alt], k) => `<figure class="cp cp${k + 1}">${img(r, p, alt, { sizes: k ? '(min-width: 900px) 22vw, 45vw' : '(min-width: 900px) 40vw, 90vw' })}</figure>`).join('\n          ')}
+        </div>
+        <div class="creation-texte reveler">
+          <p class="creation-eti">${c.eti}</p>
+          <h3>${c.titre}</h3>
+          <p>${c.texte}</p>
+          <ul class="creation-points">${c.points.map((t) => `<li>${I.ok}<span>${t}</span></li>`).join('')}</ul>
+          <a class="bouton bouton-plein" href="#commander" data-commander="${c.id}">${I.wa} Commander</a>
+        </div>
       </article>`).join('\n      ')}
     </div>
-    <p class="note-sur-mesure reveler">Une autre idée en tête ? Trousse, sac de change, cadeau de naissance… <a href="#commander" data-modele="autre">Demandez-moi</a>, on en parle.</p>
+    <p class="note-sur-mesure reveler">Une autre idée en tête ? Trousse, sac de change, cadeau de naissance… <a href="#commander" data-commander="autre">Demandez-moi</a>, on en parle.</p>
   </div>
 </section>
 
@@ -230,7 +282,7 @@ ajouter('', {
           <div class="sac-rabat"><span class="broderie" data-broderie>Léna</span></div>
         </div>
       </div>
-      <a class="bouton bouton-plein" href="#commander" data-depuis-atelier>Commander avec ce prénom</a>
+      <a class="bouton bouton-plein" href="#commander" data-commander="sac" data-depuis-atelier>${I.wa} Commander avec ce prénom</a>
     </div>
       <form class="atelier-reglages reveler" data-atelier onsubmit="return false">
         <label class="champ"><span>Son prénom</span><input type="text" name="prenom" maxlength="12" value="Léna" autocomplete="off" spellcheck="false" data-atelier-prenom></label>
@@ -281,30 +333,12 @@ ajouter('', {
     <div class="commande-texte reveler">
       <p class="surtitre">${I.fil} Commander</p>
       <h2>Votre demande, <em>en une minute</em></h2>
-      <p>Remplissez ces quelques lignes : je vous réponds avec le prix et le délai. Rien n’est engagé tant que vous n’avez pas dit oui.</p>
-      <p class="commande-aide">Vous préférez en parler directement ? <a href="${E.messenger}" target="_blank" rel="noopener">Écrivez-moi sur Messenger</a>.</p>
+      <p>Choisissez votre création : le message WhatsApp s’écrit tout seul, vous n’avez plus qu’à l’envoyer. Je vous réponds avec le prix et le délai, et rien n’est engagé tant que vous n’avez pas dit oui.</p>
+      <p class="commande-aide">Vous préférez Messenger ? <a href="${E.messenger}" target="_blank" rel="noopener">Écrivez-moi ici</a>.</p>
     </div>
-    <form class="formulaire reveler" data-commande novalidate>
-      <label class="champ"><span>Ce que vous voulez</span>
-        <select name="modele" data-commande-modele>
-          <option value="sac">Un sac à dos à son prénom</option>
-          <option value="ensemble">L’ensemble crèche &amp; maternelle (sac, doudou, snood)</option>
-          <option value="doudou">Un doudou</option>
-          <option value="autre">Autre chose</option>
-        </select>
-      </label>
-      <div class="deux">
-        <label class="champ"><span>Son prénom</span><input type="text" name="prenom" maxlength="20" data-commande-prenom></label>
-        <label class="champ"><span>Pour quand ?</span><input type="text" name="quand" placeholder="ex. la rentrée de janvier"></label>
-      </div>
-      <label class="champ"><span>Tissu, couleurs, ses héros préférés…</span><textarea name="details" rows="3" data-commande-details></textarea></label>
-      <div class="deux">
-        <label class="champ"><span>Votre prénom</span><input type="text" name="nom" autocomplete="given-name" required></label>
-        <label class="champ"><span>Votre téléphone</span><input type="tel" name="tel" autocomplete="tel" required></label>
-      </div>
-      <button class="bouton bouton-or" type="submit">Envoyer ma demande</button>
-      <p class="formulaire-retour" data-commande-retour role="status" hidden></p>
-    </form>
+    <div class="commande-choix reveler">
+      ${NOMS_MODELES.map(([v, t]) => `<a href="#commander" data-commander="${v}"><span>${esc(t)}</span>${I.wa}</a>`).join('\n      ')}
+    </div>
   </div>
 </section>`,
 });
@@ -329,7 +363,7 @@ ajouter('confidentialite/', {
   corps: () => `
 <section class="section"><div class="cadre etroit texte-riche">
   <h1>Politique de confidentialité</h1>
-  <h2>Les données recueillies</h2><p>Le formulaire de commande vous demande votre prénom, votre téléphone et le détail de votre demande. Ces informations servent uniquement à vous répondre et à traiter votre commande.</p>
+  <h2>Les données recueillies</h2><p>Le formulaire de commande ne fait que préparer un message WhatsApp : rien n’est enregistré par le site. Ce que vous m’envoyez ensuite sert uniquement à vous répondre et à traiter votre commande.</p>
   <h2>Mesure d’audience</h2><p>Le site utilise Google Analytics pour mesurer sa fréquentation de façon anonymisée.</p>
   <h2>Vos droits</h2><p>Vous pouvez demander l’accès, la rectification ou la suppression de vos données en écrivant à ${E.nom} par Messenger. Aucune donnée n’est vendue ni cédée.</p>
 </div></section>`,

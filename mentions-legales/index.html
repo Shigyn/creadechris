@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..600,100;1,9..144,400..600,100&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&family=Allura&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css?v=3">
+<link rel="stylesheet" href="../assets/style.css?v=4">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"LocalBusiness","@id":"https://shigyn.github.io/creadechris/#entreprise","name":"Créa de Chris","alternateName":"Les Créas de Chris","description":"Couture pour enfants faite main à Lançon-de-Provence : sacs à dos brodés au prénom, ensembles crèche et maternelle (sac, doudou, snood), doudous.","slogan":"100 % fait main et avec amour","url":"https://shigyn.github.io/creadechris/","image":"https://shigyn.github.io/creadechris/photos/partage.jpg","founder":{"@type":"Person","name":"Christelle Poupardin"},"address":{"@type":"PostalAddress","addressLocality":"Lançon-de-Provence","postalCode":"13680","addressRegion":"Provence-Alpes-Côte d’Azur","addressCountry":"FR"},"areaServed":[{"@type":"Place","name":"Lançon-de-Provence"},{"@type":"Place","name":"Salon-de-Provence"},{"@type":"Place","name":"Pélissanne"},{"@type":"Place","name":"La Fare-les-Oliviers"},{"@type":"Place","name":"Rognac"},{"@type":"Place","name":"Berre-l’Étang"},{"@type":"Place","name":"Bouches-du-Rhône"}],"sameAs":["https://www.facebook.com/christelle.poupardin.5"],"makesOffer":[{"@type":"Offer","itemOffered":{"@type":"Product","name":"Sac à dos enfant brodé au prénom"}},{"@type":"Offer","itemOffered":{"@type":"Product","name":"Ensemble crèche et maternelle"}},{"@type":"Offer","itemOffered":{"@type":"Product","name":"Doudou fait main"}},{"@type":"Offer","itemOffered":{"@type":"Product","name":"Snood enfant"}}]}]}</script>
 </head>
 <body class="">
@@ -38,7 +38,7 @@
       <a href="../#chris">Qui suis-je</a>
       <a href="../#commander">Commander</a>
     </nav>
-    <a class="bouton bouton-plein entete-cta" href="../#commander">Passer commande</a>
+    <a class="bouton bouton-plein entete-cta" href="../#commander" data-commander="">Passer commande</a>
     <button class="burger" type="button" aria-expanded="false" aria-controls="menu-mobile" aria-label="Ouvrir le menu"><span></span><span></span></button>
   </div>
   <div class="menu-mobile" id="menu-mobile" hidden>
@@ -47,7 +47,7 @@
     <a href="../#comment">Comment ça marche</a>
     <a href="../#chris">Qui suis-je</a>
     <a href="../#commander">Commander</a>
-    <a class="bouton bouton-plein" href="../#commander">Passer commande</a>
+    <a class="bouton bouton-plein" href="../#commander" data-commander="">Passer commande</a>
   </div>
 </header>
 
@@ -71,7 +71,7 @@
     </div>
     <div>
       <h2 class="pied-titre">Me joindre</h2>
-      <p><a href="https://m.me/christelle.poupardin.5" target="_blank" rel="noopener">Par Messenger</a><br><a href="https://www.facebook.com/christelle.poupardin.5" target="_blank" rel="noopener">Ma page Facebook</a></p>
+      <p><a href="https://wa.me/" target="_blank" rel="noopener">Par WhatsApp</a><br><a href="https://m.me/christelle.poupardin.5" target="_blank" rel="noopener">Par Messenger</a></p>
     </div>
     <div>
       <h2 class="pied-titre">Me suivre</h2>
@@ -84,7 +84,28 @@
   </div>
 </footer>
 
-<a class="flottant" href="https://m.me/christelle.poupardin.5" target="_blank" rel="noopener" aria-label="M’écrire sur Messenger"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.5 2 2 6.1 2 11.3c0 2.9 1.4 5.5 3.7 7.2V22l3.4-1.9c.9.3 1.9.4 2.9.4 5.5 0 10-4.1 10-9.2S17.5 2 12 2zm1 12.4-2.5-2.7-5 2.7 5.5-5.8 2.6 2.7 4.9-2.7z"/></svg><span>M’écrire</span></a>
+<a class="flottant" href="../#commander" data-commander="" aria-label="Commander sur WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.8 11.8 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg><span>Commander</span></a>
+
+<dialog class="fenetre" data-fenetre aria-labelledby="fenetre-titre">
+  <form class="formulaire" data-commande data-wa="" novalidate>
+    <button class="fenetre-fermer" type="button" data-fermer aria-label="Fermer">×</button>
+    <p class="surtitre"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.8 11.8 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg> Commander sur WhatsApp</p>
+    <h2 id="fenetre-titre">Votre demande, <em>prête à envoyer</em></h2>
+    <label class="champ"><span>Ce que vous voulez</span>
+      <select name="modele" data-commande-modele>
+        <option value="sac">Un sac à dos à son prénom</option><option value="ensemble">L’ensemble crèche &amp; maternelle (sac, doudou, snood)</option><option value="doudou">Un doudou</option><option value="autre">Autre chose</option>
+      </select>
+    </label>
+    <div class="deux">
+      <label class="champ"><span>Son prénom à broder</span><input type="text" name="prenom" maxlength="20" data-commande-prenom></label>
+      <label class="champ"><span>Pour quand ?</span><input type="text" name="quand" placeholder="ex. la rentrée de janvier"></label>
+    </div>
+    <label class="champ"><span>Tissu, couleurs, ses héros préférés…</span><textarea name="details" rows="3" data-commande-details></textarea></label>
+    <label class="champ"><span>Votre prénom</span><input type="text" name="nom" autocomplete="given-name"></label>
+    <button class="bouton bouton-wa" type="submit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.8 11.8 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg> Envoyer sur WhatsApp</button>
+    <p class="fenetre-note">WhatsApp s’ouvre avec votre message déjà écrit : vous n’avez plus qu’à appuyer sur envoyer. Rien n’est engagé, je vous réponds avec le prix et le délai.</p>
+  </form>
+</dialog>
 
 <script>
   window.LOCWEB_CONFIG = {
@@ -95,6 +116,6 @@
   };
 </script>
 <script src="../mesure.js" defer></script>
-<script src="../assets/site.js?v=3" defer></script>
+<script src="../assets/site.js?v=4" defer></script>
 </body>
 </html>
