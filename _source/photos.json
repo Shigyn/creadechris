@@ -1,0 +1,54 @@
+{
+"couture-machine-mains": {
+"l": 1600,
+"h": 1067
+},
+"enfant-sac-a-dos-allee": {
+"l": 1600,
+"h": 1066
+},
+"enfant-sac-a-dos-cire-jaune": {
+"l": 1600,
+"h": 2400
+},
+"sac-a-dos-pose": {
+"l": 1600,
+"h": 2124
+},
+"doudous-lapins-panier": {
+"l": 1600,
+"h": 2395
+},
+"doudou-elephant": {
+"l": 1600,
+"h": 2845
+},
+"linge-bebe-panier": {
+"l": 1600,
+"h": 2130
+},
+"broderie-coeur": {
+"l": 1600,
+"h": 2168
+},
+"broderie-fleur": {
+"l": 1600,
+"h": 2282
+},
+"tissus-rouleaux": {
+"l": 1600,
+"h": 2759
+},
+"tissus-plies": {
+"l": 1600,
+"h": 2134
+},
+"fils-et-ciseaux": {
+"l": 1600,
+"h": 2240
+},
+"couture-noir-et-blanc": {
+"l": 1600,
+"h": 1066
+}
+}
