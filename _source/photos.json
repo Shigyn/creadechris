@@ -114,5 +114,53 @@
 "peignoir-brode": {
 "l": 1170,
 "h": 1462
+},
+"g-gigoteuse": {
+"l": 900,
+"h": 1200
+},
+"g-peignoir": {
+"l": 900,
+"h": 1200
+},
+"g-sortie-de-bain": {
+"l": 675,
+"h": 1200
+},
+"g-doudou": {
+"l": 675,
+"h": 1200
+},
+"g-sac-a-dos": {
+"l": 675,
+"h": 1200
+},
+"g-housse": {
+"l": 804,
+"h": 1200
+},
+"g-gilet": {
+"l": 675,
+"h": 1200
+},
+"g-chouchous": {
+"l": 803,
+"h": 1200
+},
+"g-attaches-tetine": {
+"l": 900,
+"h": 1200
+},
+"g-lingettes": {
+"l": 1200,
+"h": 675
+},
+"g-sac-a-langer": {
+"l": 1200,
+"h": 675
+},
+"g-boule-de-noel": {
+"l": 675,
+"h": 1200
 }
 }

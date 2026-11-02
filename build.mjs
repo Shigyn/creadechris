@@ -14,7 +14,7 @@ const ICI = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Z]:)
 const PROD = process.env.PROD === '1';
 const URL_SITE = PROD ? 'https://www.creadechris.fr/' : 'https://shigyn.github.io/creadechris/';
 const PHOTOS = JSON.parse(fs.readFileSync(path.join(ICI, '_source', 'photos.json'), 'utf8'));
-const V = '9';
+const V = '10';
 
 const E = {
   nom: 'Créa de Chris',
@@ -39,11 +39,11 @@ const E = {
 
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const abs = (ch) => URL_SITE + ch;
-function img(r, nom, alt, { eager = false, sizes = '(min-width: 900px) 40vw, 100vw', cls = '' } = {}) {
+function img(r, nom, alt, { eager = false, sizes = '(min-width: 900px) 40vw, 100vw', cls = '', zone = '' } = {}) {
   const p = PHOTOS[nom];
   if (!p) throw new Error('photo inconnue : ' + nom);
   const srcset = p.l > 800 ? ` srcset="${r}photos/${nom}-800.webp 800w, ${r}photos/${nom}-1600.webp ${p.l}w" sizes="${sizes}"` : '';
-  return `<img${cls ? ` class="${cls}"` : ''} src="${r}photos/${nom}-800.webp"${srcset} alt="${esc(alt)}" width="${p.l}" height="${p.h}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`;
+  return `<img${zone ? ` data-editable-zone="${zone}"` : ''}${cls ? ` class="${cls}"` : ''} src="${r}photos/${nom}-800.webp"${srcset} alt="${esc(alt)}" width="${p.l}" height="${p.h}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`;
 }
 
 const I = {
@@ -87,6 +87,7 @@ const CARTE = [
 ];
 /* Cites dans son message, pas encore de prix. */
 const AUSSI = [['pilou', 'Pilou pilou enfant'], ['vetements-ete', 'Vêtements d’été'], ['pinces', 'Pinces à cheveux'], ['chouchous', 'Chouchous'], ['bandeaux', 'Bandeaux'], ['snoods', 'Snoods']];
+const GALERIE = [['g-gigoteuse', 'Gigoteuse oursons'], ['g-peignoir', 'Peignoir brodé au prénom'], ['g-sortie-de-bain', 'Sortie de bain brodée'], ['g-doudou', 'Doudou assorti'], ['g-sac-a-dos', 'Sac à dos d’enfant'], ['g-housse', 'Housse de matelas à langer'], ['g-gilet', 'Gilet du berger'], ['g-chouchous', 'Chouchous'], ['g-attaches-tetine', 'Attaches tétine au prénom'], ['g-lingettes', 'Lingettes lavables'], ['g-sac-a-langer', 'Sac à langer'], ['g-boule-de-noel', 'Boule de Noël personnalisée']];
 const SERVICES = [
   ['retouche', 'Une retouche', 'Retouches du quotidien', 'Ourlets, fermetures, ajustements, transformations.'],
   ['sur-mesure', 'Une création sur mesure', 'Créations sur mesure', 'Vêtements, accessoires, décoration textile.'],
@@ -122,7 +123,7 @@ const ENTITE = {
 };
 
 /* ---------------- gabarit ---------------- */
-const NAV = [['#articles', 'Articles et prix'], ['#prenom', 'Son prénom brodé'], ['#retouches', 'Retouches'], ['#chris', 'Qui suis-je'], ['#contact', 'Me joindre']];
+const NAV = [['#articles', 'Articles et prix'], ['#creations', 'Mes créations'], ['#prenom', 'Son prénom brodé'], ['#retouches', 'Retouches'], ['#chris', 'Qui suis-je'], ['#contact', 'Me joindre']];
 
 function page(chemin, { titre, description, corps, schemas = [], classe = '' }) {
   const r = '../'.repeat(chemin.split('/').filter(Boolean).length);
@@ -207,8 +208,8 @@ ${corps(r)}
     <label class="champ"><span>Ce que vous voulez</span>
       <select name="modele" data-commande-modele required>
         <option value="">Choisissez…</option>
-        ${CARTE.map((g) => `<optgroup label="${esc(g.titre)}">${g.articles.map(([v, t, p]) => `<option value="${v}">${esc(t)}${p === null ? '' : ` (${prix(p)})`}</option>`).join('')}</optgroup>`).join('')}
-        <optgroup label="Sur demande">${AUSSI.map(([v, t]) => `<option value="${v}">${esc(t)}</option>`).join('')}</optgroup>
+        ${CARTE.map((g) => `<optgroup data-produits label="${esc(g.titre)}">${g.articles.map(([v, t, p]) => `<option value="${v}">${esc(t)}${p === null ? '' : ` (${prix(p)})`}</option>`).join('')}</optgroup>`).join('')}
+        <optgroup data-produits label="Sur demande">${AUSSI.map(([v, t]) => `<option value="${v}">${esc(t)}</option>`).join('')}</optgroup>
         <optgroup label="Retouches et sur mesure">${SERVICES.map(([v, t]) => `<option value="${v}">${esc(t)}</option>`).join('')}</optgroup>
         <option value="autre">Autre chose</option>
       </select>
@@ -230,12 +231,13 @@ ${corps(r)}
   window.LOCWEB_CONFIG = {
     supabaseUrl: 'https://ibqawtgnucakzdldnitj.supabase.co',
     supabaseAnonKey: 'sb_publishable_rpLrUo4Cqnfl8zSohDqO0A_Q5Vkj2Hk',
-    clientId: '',
+    clientId: 'a7eb4483-8df3-46c5-8c00-0b18945eabc2',
     ga4Id: ''
   };
 </script>
 <script src="${r}mesure.js" defer></script>
 <script src="${r}assets/site.js?v=${V}" defer></script>
+<script src="${r}assets/contenu.js?v=${V}" defer></script>
 </body>
 </html>
 `;
@@ -254,12 +256,12 @@ ajouter('', {
   classe: 'accueil',
   corps: (r) => `
 <section class="hero">
-  <div class="hero-photo">${img(r, 'chambre-table-a-langer', 'Chambre de bébé : table à langer habillée d’une housse à motifs d’oursons, doudous et mobile', { eager: true, sizes: '(min-width: 900px) 58vw, 100vw' })}</div>
+  <div class="hero-photo">${img(r, 'chambre-table-a-langer', 'Chambre de bébé : table à langer habillée d’une housse à motifs d’oursons, doudous et mobile', { eager: true, sizes: '(min-width: 900px) 58vw, 100vw', zone: 'cdc_photo_hero' })}</div>
   <div class="cadre hero-in">
     <div class="hero-texte">
       <p class="surtitre hero-anim">${I.pin} ${esc(E.activite)} · ${E.ville}</p>
-      <h1 class="hero-anim">Pour votre bébé,<br><em>fait main à son prénom</em></h1>
-      <p class="hero-chapo hero-anim">Gigoteuse, sac à langer, doudou, bavoir… Vous choisissez le tissu, je brode son prénom. Et pour tout le reste, retouches et sur mesure : je m’adapte à vos projets.</p>
+      <h1 class="hero-anim"><span data-editable-zone="cdc_hero_titre">Pour votre bébé,</span><br><em data-editable-zone="cdc_hero_accent">fait main à son prénom</em></h1>
+      <p class="hero-chapo hero-anim" data-editable-zone="cdc_hero_chapo">Gigoteuse, sac à langer, doudou, bavoir… Vous choisissez le tissu, je brode son prénom. Et pour tout le reste, retouches et sur mesure : je m’adapte à vos projets.</p>
       <div class="actions hero-anim">
         <a class="bouton bouton-plein" href="#articles">Voir les articles et les prix</a>
         <a class="bouton bouton-ligne" href="#prenom">Essayer son prénom</a>
@@ -274,11 +276,11 @@ ajouter('', {
     <div class="tete-section reveler">
       <p class="surtitre">${I.fil} Articles bébé personnalisables</p>
       <h2>Tous les prix, <em>d’un coup d’œil</em></h2>
-      <p class="chapo">Tous les tissus peuvent être choisis, avec énormément de choix à la demande. Touchez un article : votre message WhatsApp s’écrit tout seul.</p>
+      <p class="chapo" data-editable-zone="cdc_articles_chapo">Tous les tissus peuvent être choisis, avec énormément de choix à la demande. Touchez un article : votre message WhatsApp s’écrit tout seul.</p>
     </div>
     <div class="carte">
-      ${CARTE.map((g) => `<div class="carte-groupe reveler">
-        <figure>${img(r, g.photo[0], g.photo[1], { sizes: '(min-width: 1100px) 30vw, (min-width: 720px) 45vw, 90vw' })}</figure>
+      ${CARTE.map((g, n) => `<div class="carte-groupe reveler" data-categorie="${esc(g.titre)}">
+        <figure>${img(r, g.photo[0], g.photo[1], { sizes: '(min-width: 1100px) 30vw, (min-width: 720px) 45vw, 90vw', zone: `cdc_photo_groupe_${n + 1}` })}</figure>
         <h3>${g.titre}</h3>
         <ul>
           ${g.articles.map(([id, nom, p]) => `<li><a class="article" href="#contact" data-commander="${id}"><span class="article-nom">${esc(nom)}</span><span class="article-prix${p === null ? ' article-prix-texte' : ''}">${prix(p)}</span><span class="article-cmd">Commander</span></a></li>`).join('\n          ')}
@@ -290,6 +292,18 @@ ajouter('', {
       <div class="aussi-liste">
         ${AUSSI.map(([id, nom]) => `<a href="#contact" data-commander="${id}">${esc(nom)}</a>`).join('\n        ')}
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-papier" id="creations">
+  <div class="cadre">
+    <div class="tete-section reveler">
+      <p class="surtitre">${I.fil} Mes créations</p>
+      <h2>Quelques pièces <em>sorties de l’atelier</em></h2>
+    </div>
+    <div class="galerie reveler" data-galerie>
+      ${GALERIE.map(([nom, t]) => `<figure>${img(r, nom, t, { sizes: '(min-width: 900px) 25vw, 50vw' })}<figcaption>${esc(t)}</figcaption></figure>`).join('\n      ')}
     </div>
   </div>
 </section>
@@ -328,7 +342,7 @@ ajouter('', {
 
 <section class="section" id="retouches">
   <div class="cadre services">
-    <figure class="services-photo reveler">${img(r, 'couture-machine-mains', 'Mains qui guident un tissu sous le pied de la machine à coudre', { sizes: '(min-width: 900px) 42vw, 90vw' })}</figure>
+    <figure class="services-photo reveler">${img(r, 'couture-machine-mains', 'Mains qui guident un tissu sous le pied de la machine à coudre', { sizes: '(min-width: 900px) 42vw, 90vw', zone: 'cdc_photo_atelier' })}</figure>
     <div class="reveler">
       <p class="surtitre">${I.fil} Retouches et sur mesure</p>
       <h2>Un projet, une envie ? <em>Je m’adapte</em></h2>
@@ -356,12 +370,12 @@ ajouter('', {
 
 <section class="section" id="chris">
   <div class="cadre chris">
-    <figure class="chris-photo reveler">${img(r, 'peignoir-brode', 'Petit peignoir blanc en éponge, brodé d’un prénom en vert', { sizes: '(min-width: 900px) 34vw, 90vw' })}</figure>
+    <figure class="chris-photo reveler">${img(r, 'peignoir-brode', 'Petit peignoir blanc en éponge, brodé d’un prénom en vert', { sizes: '(min-width: 900px) 34vw, 90vw', zone: 'cdc_photo_chris' })}</figure>
     <div class="chris-texte reveler">
       <p class="surtitre">${I.fil} Qui suis-je</p>
       <h2>Moi, c’est <em>Chris</em></h2>
-      <p>Je couds à ${E.ville}. Articles de naissance, cadeaux personnalisés, retouches : chaque pièce est réalisée avec soin, passion et minutie.</p>
-      <p>Chaque création est unique, pensée pour votre bébé et faite avec amour. Idéal pour un cadeau de naissance, un anniversaire, ou juste pour faire plaisir.</p>
+      <p data-editable-zone="cdc_chris_texte_1">Je couds à ${E.ville}. Articles de naissance, cadeaux personnalisés, retouches : chaque pièce est réalisée avec soin, passion et minutie.</p>
+      <p data-editable-zone="cdc_chris_texte_2">Chaque création est unique, pensée pour votre bébé et faite avec amour. Idéal pour un cadeau de naissance, un anniversaire, ou juste pour faire plaisir.</p>
       <p class="signature">Chris</p>
     </div>
   </div>
@@ -372,7 +386,7 @@ ajouter('', {
     <div class="commande-texte reveler">
       <p class="surtitre">${I.fil} Me joindre</p>
       <h2>Une question, <em>une commande ?</em></h2>
-      <p>Prise de commande sur rendez-vous, à ${E.ville}. Le plus simple : un message sur WhatsApp, ou un appel.</p>
+      <p data-editable-zone="cdc_contact_texte">Prise de commande sur rendez-vous, à ${E.ville}. Le plus simple : un message sur WhatsApp, ou un appel.</p>
       <div class="actions">
         <a class="bouton bouton-wa" href="${WA}" target="_blank" rel="noopener">${I.wa} Écrire sur WhatsApp</a>
         <a class="bouton bouton-or" href="tel:${E.tel}">${I.tel} ${E.telAffiche}</a>
@@ -382,7 +396,7 @@ ajouter('', {
     <div class="marches reveler">
       <h3>Me retrouver <em>sur les marchés</em></h3>
       <ul>
-        ${MARCHES.map((m) => `<li${m.jusquau ? ` data-jusquau="${m.jusquau}"` : ''}><b>${m.quand}</b><span>${m.ou}</span></li>`).join('\n        ')}
+        ${[...MARCHES, {}].map((m, i) => `<li data-marche="${i + 1}"${m.jusquau ? ` data-jusquau="${m.jusquau}" data-texte="${esc(m.quand)}"` : ''}${m.quand ? '' : ' hidden'}><b data-editable-zone="cdc_marche_${i + 1}_quand">${m.quand || ''}</b><span data-editable-zone="cdc_marche_${i + 1}_ou">${m.ou || ''}</span></li>`).join('\n        ')}
       </ul>
     </div>
   </div>
