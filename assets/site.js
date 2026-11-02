@@ -69,8 +69,13 @@
     maj();
   }
 
+  /* Un marche passe disparait tout seul. */
+  document.querySelectorAll('[data-jusquau]').forEach(function (li) {
+    if (new Date(li.getAttribute('data-jusquau') + 'T23:59:59') < new Date()) li.hidden = true;
+  });
+
   /* La commande : chaque bouton « Commander » ouvre la fenetre, deja
-     remplie avec la creation choisie (et le prenom essaye plus haut). */
+     remplie avec l'article choisi (et le prenom essaye plus haut). */
   var fenetre = document.querySelector('[data-fenetre]');
   var form = document.querySelector('[data-commande]');
   if (fenetre && form) {
@@ -82,8 +87,7 @@
       var a = e.target.closest('[data-commander]');
       if (!a || !fenetre.showModal) return;
       e.preventDefault();
-      var modele = a.getAttribute('data-commander');
-      if (modele) choixModele.value = modele;
+      choixModele.value = a.getAttribute('data-commander');
       if (a.hasAttribute('data-depuis-atelier') && reglages) {
         var f = new FormData(reglages);
         var nomDe = function (nom) { var x = reglages.querySelector('input[name="' + nom + '"]:checked'); return x ? x.parentNode.querySelector('.nom').textContent : ''; };
@@ -92,7 +96,7 @@
       }
       if (menu && !menu.hidden) burger.click();
       fenetre.showModal();
-      (champCmdPrenom.value ? champDetails : champCmdPrenom).focus();
+      (!choixModele.value ? choixModele : champCmdPrenom.value ? champDetails : champCmdPrenom).focus();
     });
     fenetre.querySelector('[data-fermer]').addEventListener('click', function () { fenetre.close(); });
     fenetre.addEventListener('click', function (e) { if (e.target === fenetre) fenetre.close(); });
@@ -106,6 +110,7 @@
         f.get('prenom') ? 'Prénom à broder : ' + f.get('prenom') : '',
         f.get('quand') ? 'Pour : ' + f.get('quand') : '',
         f.get('details') ? 'Détails : ' + f.get('details') : '',
+        f.get('premiere') ? 'C’est ma première commande (−5 %)' : '',
         f.get('nom') ? 'Merci ! ' + f.get('nom') : 'Merci !',
       ].filter(Boolean).join('\n');
       var numero = form.getAttribute('data-wa') || '';

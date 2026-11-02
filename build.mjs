@@ -2,11 +2,10 @@
 //  Créa de Chris — generateur du site (LocWeb, 2026-11-02)
 //     node build.mjs          -> apercu (noindex)
 //     PROD=1 node build.mjs   -> mise en ligne
-//  Apercu spontane : ce qu'on sait d'elle vient de sa page Facebook
-//  (vignettes : sacs a dos brodes au prenom, ensembles creche/maternelle
-//  sac + doudou + snood, logo « 100 % fait main et avec amour ») et du
-//  registre des entreprises. Rien d'invente : pas de prix, pas d'adresse
-//  (729 chemin Notre-Dame = domicile probable), seulement la commune.
+//  Articles et prix : sa carte (2026-11-02). Services, -5 %, « sur
+//  rendez-vous » : ses flyers. Marches et articles sans prix : son message.
+//  Son adresse (729 chemin Notre-Dame) figure sur ses flyers mais reste
+//  hors du site tant qu'elle n'a pas dit oui : seulement la commune.
 // ===================================================================
 import fs from 'node:fs';
 import path from 'node:path';
@@ -15,12 +14,13 @@ const ICI = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Z]:)
 const PROD = process.env.PROD === '1';
 const URL_SITE = PROD ? 'https://www.creadechris.fr/' : 'https://shigyn.github.io/creadechris/';
 const PHOTOS = JSON.parse(fs.readFileSync(path.join(ICI, '_source', 'photos.json'), 'utf8'));
-const V = '4';
+const V = '5';
 
 const E = {
   nom: 'Créa de Chris',
   autreNom: 'Les Créas de Chris',
-  devise: '100 % fait main et avec amour',
+  devise: 'Fait main avec soin',
+  activite: 'Retouches & Créations',
   prenom: 'Chris',
   dirigeante: 'Christelle Poupardin',
   siret: '793 899 568 00026',
@@ -29,9 +29,12 @@ const E = {
   departement: 'Bouches-du-Rhône',
   facebook: 'https://www.facebook.com/christelle.poupardin.5',
   messenger: 'https://m.me/christelle.poupardin.5',
-  // Son numero WhatsApp, format international sans + (ex. 33612345678).
-  // Vide tant qu'on ne l'a pas : WhatsApp s'ouvre et le client choisit le contact.
-  whatsapp: '',
+  // Sa carte dit @creadechris, ses deux flyers Les.creas_de_chris : a confirmer.
+  instagram: 'https://www.instagram.com/les.creas_de_chris/',
+  telAffiche: '06 29 35 80 92',
+  tel: '+33629358092',
+  // Le numero de ses flyers : a confirmer qu'il a bien WhatsApp.
+  whatsapp: '33629358092',
 };
 
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -49,38 +52,42 @@ const I = {
   fb: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.3H7.4V14h2.7v8z"/></svg>',
   msg: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.5 2 2 6.1 2 11.3c0 2.9 1.4 5.5 3.7 7.2V22l3.4-1.9c.9.3 1.9.4 2.9.4 5.5 0 10-4.1 10-9.2S17.5 2 12 2zm1 12.4-2.5-2.7-5 2.7 5.5-5.8 2.6 2.7 4.9-2.7z"/></svg>',
   wa: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.8 11.8 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>',
-  ok: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 16.6 4.9 12l-1.4 1.4 6 6 11-11-1.4-1.4z"/></svg>',
+  tel: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg>',
+  insta: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2h8a6 6 0 0 1 6 6v8a6 6 0 0 1-6 6H8a6 6 0 0 1-6-6V8a6 6 0 0 1 6-6zm0 2a4 4 0 0 0-4 4v8a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4V8a4 4 0 0 0-4-4zm4 3.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm5-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>',
   // Une aiguillee : le fil qui court entre les sections.
   fil: '<svg class="fil" viewBox="0 0 140 24" aria-hidden="true"><path d="M2 14c18-12 30 8 48-2s30-10 46 2 28 4 42-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="5 5"/></svg>',
 };
 
-/* Ce qu'elle coud, d'apres ses publications. Pas de prix : elle les donne
-   a la demande (a lui faire confirmer avant la mise en ligne). */
-const CREATIONS = [
+/* Sa carte, telle quelle : memes groupes, memes prix. */
+const CARTE = [
   {
-    id: 'sac', nom: 'Un sac à dos à son prénom', eti: 'Le plus demandé',
-    photos: [['enfant-sac-a-dos-allee', 'Enfant de dos avec son petit sac à dos'], ['enfant-sac-a-dos-cire-jaune', 'Enfant en ciré jaune avec son sac à dos']],
-    titre: 'Le sac à dos <em>à son prénom</em>',
-    texte: 'Le petit sac pour la crèche ou l’école, avec son rabat brodé au prénom de l’enfant. Il le reconnaît du premier coup d’œil, et il ne se perd plus.',
-    points: ['Rabat brodé au prénom', 'Taille pensée pour les petits dos', 'Tissu au choix : ses héros, des motifs, des unis'],
+    titre: 'Les indispensables', photo: ['gigoteuses-suspendues', 'Gigoteuses de couleurs douces suspendues à un lit de bébé'],
+    articles: [['peignoir', 'Peignoir', 25], ['gigoteuse-ete', 'Gigoteuse été', 35], ['gigoteuse-hiver', 'Gigoteuse hiver', 45], ['nid-d-ange', 'Nid d’ange', 40], ['sac-a-langer', 'Sac à langer', 65], ['couverture', 'Couverture', 45]],
   },
   {
-    id: 'ensemble', nom: 'L’ensemble crèche & maternelle (sac, doudou, snood)', eti: 'Pour la rentrée',
-    photos: [['sac-a-dos-pose', 'Petit sac à dos posé sur une table'], ['doudou-elephant', 'Doudou éléphant en tissu'], ['tissus-plies', 'Tissus colorés pliés']],
-    titre: 'L’ensemble <em>crèche &amp; maternelle</em>',
-    texte: 'Le sac à dos, son doudou et son snood, cousus dans le même tissu : tout ce qu’il faut pour la crèche ou l’entrée en maternelle, assorti et prêt à partir.',
-    points: ['Sac à dos brodé au prénom', 'Doudou et snood assortis', 'Les trois dans le même tissu'],
+    titre: 'Idées cadeaux', photo: ['doudous-lapins-panier', 'Doudous lapins en tissu dans un panier'],
+    articles: [['doudou', 'Doudou', 22], ['kit-naissance', 'Kit naissance', 28], ['sortie-de-bain', 'Sortie de bain', 25], ['attache-tetine', 'Attache tétine', 15.5], ['protege-carnet', 'Protège carnet', 13.5]],
   },
   {
-    id: 'doudou', nom: 'Un doudou', eti: 'Le compagnon',
-    photos: [['doudous-lapins-panier', 'Doudous lapins en tissu dans un panier'], ['linge-bebe-panier', 'Linge doux pour bébé dans un panier']],
-    titre: 'Le doudou <em>tout doux</em>',
-    texte: 'Fait pour être serré fort et traîner partout. Dans le tissu de votre choix, assorti à son sac si vous le souhaitez.',
-    points: ['Cousu main, pièce unique', 'Tissu au choix', 'Assorti au sac sur demande'],
+    titre: 'Pratique au quotidien', photo: ['housse-matelas', 'Matelas à langer et sa housse à motifs d’oursons'],
+    articles: [['lingettes', '10 lingettes + panier', 20], ['housse-matelas', 'Housse matelas à langer', 15], ['matelas-nomade', 'Matelas nomade', 20], ['bavoir', 'Bavoir', 7], ['anti-bavouille', 'Anti-bavouille (lot de 2)', 17]],
   },
 ];
+/* Cites dans son message, absents de sa carte : pas encore de prix. */
+const SUR_DEMANDE = [['set-creche', 'Set crèche (sac à dos + doudou)'], ['couette-bebe', 'Couette lit bébé'], ['couette-enfant', 'Couette lit enfant'], ['trousse', 'Trousse de toilette'], ['anneau', 'Anneau de dentition'], ['boule-noel', 'Boule de Noël'], ['chaussettes-noel', 'Chaussettes de Noël'], ['gilet-berger', 'Gilet du berger'], ['sac-femme', 'Sac femme en jean et tissu']];
+const SERVICES = [
+  ['retouche', 'Une retouche', 'Retouches du quotidien', 'Ourlets, fermetures, ajustements, transformations.'],
+  ['sur-mesure', 'Une création sur mesure', 'Créations sur mesure', 'Vêtements, accessoires, décoration textile.'],
+  ['flocage', 'Une broderie ou un flocage', 'Broderie et flocage', 'Textile, cadeaux, événements : la personnalisation pour toutes les occasions.'],
+  ['deco', 'De la décoration textile', 'Décoration textile', 'Rideaux, coussins, panières, accessoires pour la maison.'],
+];
+/* Une date passee disparait toute seule (site.js). */
+const MARCHES = [
+  { quand: 'Le 8 novembre', ou: 'Salon-de-Provence', jusquau: '2026-11-08' },
+  { quand: 'À partir de fin novembre', ou: 'Dans le Gard' },
+];
+const prix = (n) => n.toLocaleString('fr-FR', { minimumFractionDigits: n % 1 ? 2 : 0 }) + ' €';
 const WA = `https://wa.me/${E.whatsapp}`;
-const NOMS_MODELES =[...CREATIONS.map((c) => [c.id, c.nom]), ['autre', 'Autre chose']];
 const TISSUS = [['rose', 'Rose poudré'], ['nuit', 'Bleu nuit'], ['lin', 'Lin naturel'], ['sauge', 'Vert sauge']];
 const FILS = [['blanc', 'Blanc'], ['or', 'Doré'], ['rose', 'Rose'], ['nuit', 'Bleu nuit']];
 
@@ -90,19 +97,20 @@ const ENTITE = {
   '@id': URL_SITE + '#entreprise',
   name: E.nom,
   alternateName: E.autreNom,
-  description: 'Couture pour enfants faite main à Lançon-de-Provence : sacs à dos brodés au prénom, ensembles crèche et maternelle (sac, doudou, snood), doudous.',
+  description: 'Articles bébé personnalisés et faits main à Lançon-de-Provence : gigoteuses, sacs à langer, doudous, bavoirs brodés au prénom. Retouches, créations sur mesure, broderie et flocage.',
+  telephone: E.tel,
   slogan: E.devise,
   url: URL_SITE,
   image: URL_SITE + 'photos/partage.jpg',
   founder: { '@type': 'Person', name: E.dirigeante },
   address: { '@type': 'PostalAddress', addressLocality: E.ville, postalCode: E.codePostal, addressRegion: 'Provence-Alpes-Côte d’Azur', addressCountry: 'FR' },
   areaServed: ['Lançon-de-Provence', 'Salon-de-Provence', 'Pélissanne', 'La Fare-les-Oliviers', 'Rognac', 'Berre-l’Étang', 'Bouches-du-Rhône'].map((v) => ({ '@type': 'Place', name: v })),
-  sameAs: [E.facebook],
-  makesOffer: ['Sac à dos enfant brodé au prénom', 'Ensemble crèche et maternelle', 'Doudou fait main', 'Snood enfant'].map((n) => ({ '@type': 'Offer', itemOffered: { '@type': 'Product', name: n } })),
+  sameAs: [E.facebook, E.instagram],
+  makesOffer: CARTE.flatMap((g) => g.articles).map(([, n, p]) => ({ '@type': 'Offer', price: p, priceCurrency: 'EUR', itemOffered: { '@type': 'Product', name: n } })),
 };
 
 /* ---------------- gabarit ---------------- */
-const NAV = [['#creations', 'Créations'], ['#prenom', 'Son prénom brodé'], ['#comment', 'Comment ça marche'], ['#chris', 'Qui suis-je'], ['#commander', 'Commander']];
+const NAV = [['#articles', 'Articles et prix'], ['#prenom', 'Son prénom brodé'], ['#retouches', 'Retouches'], ['#chris', 'Qui suis-je'], ['#contact', 'Me joindre']];
 
 function page(chemin, { titre, description, corps, schemas = [], classe = '' }) {
   const r = '../'.repeat(chemin.split('/').filter(Boolean).length);
@@ -138,17 +146,17 @@ ${PROD ? '' : '<meta name="robots" content="noindex,nofollow">\n'}<link rel="can
   <div class="entete-in">
     <a class="marque" href="${accueil}" aria-label="${esc(E.nom)}, accueil">
       <span class="marque-nom">Créa de Chris</span>
-      <span class="marque-devise">${esc(E.devise)}</span>
+      <span class="marque-devise">${esc(E.activite)}</span>
     </a>
     <nav class="nav" aria-label="Navigation principale">
       ${NAV.map(([h, t]) => `<a href="${lien(h)}">${t}</a>`).join('\n      ')}
     </nav>
-    <a class="bouton bouton-plein entete-cta" href="${lien('#commander')}" data-commander="">Passer commande</a>
+    <a class="bouton bouton-plein entete-cta" href="${lien('#contact')}" data-commander="">Commander</a>
     <button class="burger" type="button" aria-expanded="false" aria-controls="menu-mobile" aria-label="Ouvrir le menu"><span></span><span></span></button>
   </div>
   <div class="menu-mobile" id="menu-mobile" hidden>
     ${NAV.map(([h, t]) => `<a href="${lien(h)}">${t}</a>`).join('\n    ')}
-    <a class="bouton bouton-plein" href="${lien('#commander')}" data-commander="">Passer commande</a>
+    <a class="bouton bouton-plein" href="${lien('#contact')}" data-commander="">Commander</a>
   </div>
 </header>
 
@@ -160,15 +168,15 @@ ${corps(r)}
   <div class="cadre pied-haut">
     <div>
       <p class="pied-nom">Créa de Chris</p>
-      <p>Couture pour enfants, faite main à ${E.ville} (${E.departement}).</p>
+      <p>${esc(E.activite)}, ${esc(E.devise.toLowerCase())} à ${E.ville} (${E.departement}).</p>
     </div>
     <div>
       <h2 class="pied-titre">Me joindre</h2>
-      <p><a href="${WA}" target="_blank" rel="noopener">Par WhatsApp</a><br><a href="${E.messenger}" target="_blank" rel="noopener">Par Messenger</a></p>
+      <p><a href="tel:${E.tel}">${E.telAffiche}</a><br><a href="${WA}" target="_blank" rel="noopener">Par WhatsApp</a></p>
     </div>
     <div>
       <h2 class="pied-titre">Me suivre</h2>
-      <p class="pied-reseaux"><a href="${E.facebook}" target="_blank" rel="noopener" aria-label="Facebook">${I.fb}</a></p>
+      <p class="pied-reseaux"><a href="${E.facebook}" target="_blank" rel="noopener" aria-label="Facebook">${I.fb}</a> <a href="${E.instagram}" target="_blank" rel="noopener" aria-label="Instagram">${I.insta}</a></p>
     </div>
   </div>
   <div class="cadre pied-bas">
@@ -177,26 +185,31 @@ ${corps(r)}
   </div>
 </footer>
 
-<a class="flottant" href="${lien('#commander')}" data-commander="" aria-label="Commander sur WhatsApp">${I.wa}<span>Commander</span></a>
+<a class="flottant" href="${lien('#contact')}" data-commander="" aria-label="Commander sur WhatsApp">${I.wa}<span>Commander</span></a>
 
 <dialog class="fenetre" data-fenetre aria-labelledby="fenetre-titre">
-  <form class="formulaire" data-commande data-wa="${E.whatsapp}" novalidate>
+  <form class="formulaire" data-commande data-wa="${E.whatsapp}">
     <button class="fenetre-fermer" type="button" data-fermer aria-label="Fermer">×</button>
     <p class="surtitre">${I.wa} Commander sur WhatsApp</p>
     <h2 id="fenetre-titre">Votre demande, <em>prête à envoyer</em></h2>
     <label class="champ"><span>Ce que vous voulez</span>
-      <select name="modele" data-commande-modele>
-        ${NOMS_MODELES.map(([v, t]) => `<option value="${v}">${esc(t)}</option>`).join('')}
+      <select name="modele" data-commande-modele required>
+        <option value="">Choisissez…</option>
+        ${CARTE.map((g) => `<optgroup label="${esc(g.titre)}">${g.articles.map(([v, t, p]) => `<option value="${v}">${esc(t)} (${prix(p)})</option>`).join('')}</optgroup>`).join('')}
+        <optgroup label="Sur demande">${SUR_DEMANDE.map(([v, t]) => `<option value="${v}">${esc(t)}</option>`).join('')}</optgroup>
+        <optgroup label="Retouches et sur mesure">${SERVICES.map(([v, t]) => `<option value="${v}">${esc(t)}</option>`).join('')}</optgroup>
+        <option value="autre">Autre chose</option>
       </select>
     </label>
     <div class="deux">
-      <label class="champ"><span>Son prénom à broder</span><input type="text" name="prenom" maxlength="20" data-commande-prenom></label>
-      <label class="champ"><span>Pour quand ?</span><input type="text" name="quand" placeholder="ex. la rentrée de janvier"></label>
+      <label class="champ"><span>Prénom à broder</span><input type="text" name="prenom" maxlength="20" data-commande-prenom></label>
+      <label class="champ"><span>Pour quand ?</span><input type="text" name="quand" placeholder="ex. Noël"></label>
     </div>
-    <label class="champ"><span>Tissu, couleurs, ses héros préférés…</span><textarea name="details" rows="3" data-commande-details></textarea></label>
+    <label class="champ"><span>Tissu, couleurs, votre idée…</span><textarea name="details" rows="3" data-commande-details></textarea></label>
     <label class="champ"><span>Votre prénom</span><input type="text" name="nom" autocomplete="given-name"></label>
+    <label class="coche"><input type="checkbox" name="premiere"><span>C’est ma première commande (−5 %)</span></label>
     <button class="bouton bouton-wa" type="submit">${I.wa} Envoyer sur WhatsApp</button>
-    <p class="fenetre-note">WhatsApp s’ouvre avec votre message déjà écrit : vous n’avez plus qu’à appuyer sur envoyer. Rien n’est engagé, je vous réponds avec le prix et le délai.</p>
+    <p class="fenetre-note">WhatsApp s’ouvre avec votre message déjà écrit : vous n’avez plus qu’à appuyer sur envoyer. Rien n’est engagé : je vous réponds pour les tissus et le délai.</p>
   </form>
 </dialog>
 
@@ -222,49 +235,49 @@ const PAGES = [];
 const ajouter = (ch, o) => PAGES.push([ch, o]);
 
 ajouter('', {
-  titre: 'Créa de Chris — Sacs à dos brodés au prénom et couture enfant, Lançon-de-Provence',
-  description: 'Sacs à dos brodés au prénom, ensembles crèche et maternelle, doudous : la couture pour enfants de Chris, 100 % faite main à Lançon-de-Provence, près de Salon.',
+  titre: 'Créa de Chris — Articles bébé personnalisés et retouches, Lançon-de-Provence',
+  description: 'Gigoteuses, sacs à langer, doudous, bavoirs brodés au prénom : des articles bébé faits main à Lançon-de-Provence, près de Salon, avec tous les prix. Retouches et sur mesure.',
   schemas: [{ '@type': 'WebSite', url: URL_SITE, name: E.nom, inLanguage: 'fr-FR' }],
   classe: 'accueil',
   corps: (r) => `
 <section class="hero">
-  <div class="hero-photo">${img(r, 'couture-machine-mains', 'Mains qui guident un tissu sous le pied de la machine à coudre', { eager: true, sizes: '(min-width: 900px) 58vw, 100vw' })}</div>
+  <div class="hero-photo">${img(r, 'table-a-langer', 'Table à langer habillée d’un matelas et d’une housse à motifs d’oursons, panier de lingettes assorties', { eager: true, sizes: '(min-width: 900px) 58vw, 100vw' })}</div>
   <div class="cadre hero-in">
     <div class="hero-texte">
-      <p class="surtitre hero-anim">${I.pin} Couture pour enfants · ${E.ville}</p>
-      <h1 class="hero-anim">Cousu main,<br><em>brodé à son prénom</em></h1>
-      <p class="hero-chapo hero-anim">Sacs à dos pour la crèche et l’école, doudous, ensembles assortis : des pièces uniques, cousues une à une pour un enfant en particulier. Le vôtre.</p>
+      <p class="surtitre hero-anim">${I.pin} ${esc(E.activite)} · ${E.ville}</p>
+      <h1 class="hero-anim">Pour votre bébé,<br><em>fait main à son prénom</em></h1>
+      <p class="hero-chapo hero-anim">Gigoteuse, sac à langer, doudou, bavoir… Vous choisissez le tissu, je brode son prénom. Et pour tout le reste, retouches et sur mesure : je m’adapte à vos projets.</p>
       <div class="actions hero-anim">
-        <a class="bouton bouton-plein" href="#prenom">Essayer avec son prénom</a>
-        <a class="bouton bouton-ligne" href="#creations">Voir les créations</a>
+        <a class="bouton bouton-plein" href="#articles">Voir les articles et les prix</a>
+        <a class="bouton bouton-ligne" href="#prenom">Essayer son prénom</a>
       </div>
     </div>
-    <p class="etiquette hero-anim" aria-hidden="true"><span>${esc(E.devise)}</span></p>
+    <p class="etiquette hero-anim"><span><b>−5 %</b> sur votre première commande</span></p>
   </div>
 </section>
 
-<section class="section" id="creations">
+<section class="section" id="articles">
   <div class="cadre">
     <div class="tete-section reveler">
-      <p class="surtitre">${I.fil} Les créations</p>
-      <h2>Pour les petits, <em>en un seul exemplaire</em></h2>
-      <p class="chapo">Chaque pièce est cousue à la commande, dans le tissu que vous choisissez : leurs héros préférés, des motifs tout doux ou des unis.</p>
+      <p class="surtitre">${I.fil} Articles bébé personnalisables</p>
+      <h2>Tous les prix, <em>d’un coup d’œil</em></h2>
+      <p class="chapo">Tous les tissus peuvent être choisis, avec énormément de choix à la demande. Touchez un article : votre message WhatsApp s’écrit tout seul.</p>
     </div>
-    <div class="creations">
-      ${CREATIONS.map((c, n) => `<article class="creation creation-${c.id}${n % 2 ? ' creation-inverse' : ''}">
-        <div class="creation-photos photos-${c.photos.length} reveler">
-          ${c.photos.map(([p, alt], k) => `<figure class="cp cp${k + 1}">${img(r, p, alt, { sizes: k ? '(min-width: 900px) 22vw, 45vw' : '(min-width: 900px) 40vw, 90vw' })}</figure>`).join('\n          ')}
-        </div>
-        <div class="creation-texte reveler">
-          <p class="creation-eti">${c.eti}</p>
-          <h3>${c.titre}</h3>
-          <p>${c.texte}</p>
-          <ul class="creation-points">${c.points.map((t) => `<li>${I.ok}<span>${t}</span></li>`).join('')}</ul>
-          <a class="bouton bouton-plein" href="#commander" data-commander="${c.id}">${I.wa} Commander</a>
-        </div>
-      </article>`).join('\n      ')}
+    <div class="carte">
+      ${CARTE.map((g) => `<div class="carte-groupe reveler">
+        <figure>${img(r, g.photo[0], g.photo[1], { sizes: '(min-width: 1100px) 30vw, (min-width: 720px) 45vw, 90vw' })}</figure>
+        <h3>${g.titre}</h3>
+        <ul>
+          ${g.articles.map(([id, nom, p]) => `<li><a class="article" href="#contact" data-commander="${id}"><span class="article-nom">${esc(nom)}</span><span class="article-prix">${prix(p)}</span><span class="article-cmd">Commander</span></a></li>`).join('\n          ')}
+        </ul>
+      </div>`).join('\n      ')}
     </div>
-    <p class="note-sur-mesure reveler">Une autre idée en tête ? Trousse, sac de change, cadeau de naissance… <a href="#commander" data-commander="autre">Demandez-moi</a>, on en parle.</p>
+    <div class="aussi reveler">
+      <h3>Et aussi, <em>prix sur demande</em></h3>
+      <div class="aussi-liste">
+        ${SUR_DEMANDE.map(([id, nom]) => `<a href="#contact" data-commander="${id}">${esc(nom)}</a>`).join('\n        ')}
+      </div>
+    </div>
   </div>
 </section>
 
@@ -273,7 +286,7 @@ ajouter('', {
     <div class="atelier-texte reveler">
       <p class="surtitre">${I.fil} Son prénom brodé</p>
       <h2>Tapez son prénom, <em>je le brode</em></h2>
-      <p>C’est le détail qui change tout : à la crèche, chacun reconnaît son sac. Essayez ici le prénom, la couleur du tissu et celle du fil. L’aperçu vous donne l’idée ; la vraie broderie, c’est moi qui la fais.</p>
+      <p>Je brode le prénom sur tout ce qui peut l’être. Essayez ici le prénom, la couleur du tissu et celle du fil : l’aperçu vous donne l’idée, la vraie broderie, c’est moi qui la fais.</p>
     </div>
     <div class="atelier-rendu reveler" aria-live="polite">
       <div class="sac" data-sac data-tissu="rose" data-fil="blanc" data-ecriture="attachee">
@@ -282,7 +295,7 @@ ajouter('', {
           <div class="sac-rabat"><span class="broderie" data-broderie>Léna</span></div>
         </div>
       </div>
-      <a class="bouton bouton-plein" href="#commander" data-commander="sac" data-depuis-atelier>${I.wa} Commander avec ce prénom</a>
+      <a class="bouton bouton-plein" href="#contact" data-commander="" data-depuis-atelier>${I.wa} Commander avec ce prénom</a>
     </div>
       <form class="atelier-reglages reveler" data-atelier onsubmit="return false">
         <label class="champ"><span>Son prénom</span><input type="text" name="prenom" maxlength="12" value="Léna" autocomplete="off" spellcheck="false" data-atelier-prenom></label>
@@ -300,44 +313,64 @@ ajouter('', {
   </div>
 </section>
 
-<section class="section" id="comment">
+<section class="section" id="retouches">
+  <div class="cadre services">
+    <figure class="services-photo reveler">${img(r, 'couture-machine-mains', 'Mains qui guident un tissu sous le pied de la machine à coudre', { sizes: '(min-width: 900px) 42vw, 90vw' })}</figure>
+    <div class="reveler">
+      <p class="surtitre">${I.fil} Retouches et sur mesure</p>
+      <h2>Un projet, une envie ? <em>Je m’adapte</em></h2>
+      <div class="services-liste">
+        ${SERVICES.map(([id, , t, d]) => `<a class="service" href="#contact" data-commander="${id}"><b>${esc(t)}</b><span>${esc(d)}</span></a>`).join('\n        ')}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-papier" id="comment">
   <div class="cadre">
     <div class="tete-section reveler">
       <p class="surtitre">${I.fil} Comment ça marche</p>
-      <h2>De votre idée <em>à son sac</em></h2>
+      <h2>De votre idée <em>à votre commande</em></h2>
     </div>
     <ol class="etapes">
-      <li class="reveler"><b>Vous choisissez</b><span>Le modèle, le tissu et le prénom. Envoyez-moi votre demande, même si vous hésitez encore : on décide ensemble.</span></li>
-      <li class="reveler"><b>Je vous réponds</b><span>Je vous confirme le prix, les tissus disponibles et le délai avant de commencer.</span></li>
-      <li class="reveler"><b>Je couds</b><span>Coupe, couture, broderie : tout est fait main, à ${E.ville}.</span></li>
-      <li class="reveler"><b>Vous le récupérez</b><span>En main propre autour de Lançon, ou envoyé par la poste.</span></li>
+      <li class="reveler"><b>Vous choisissez</b><span>L’article, et le prénom à broder si vous le souhaitez. Le message WhatsApp s’écrit tout seul.</span></li>
+      <li class="reveler"><b>On en parle</b><span>Tissus, délai, rendez-vous : on fixe tout ensemble avant que je commence.</span></li>
+      <li class="reveler"><b>Je couds</b><span>Chaque pièce est réalisée à la main, à ${E.ville}, avec soin et minutie.</span></li>
+      <li class="reveler"><b>Vous récupérez</b><span>On convient ensemble de la remise de votre commande.</span></li>
     </ol>
   </div>
 </section>
 
-<section class="section section-papier" id="chris">
+<section class="section" id="chris">
   <div class="cadre chris">
-    <figure class="chris-photo reveler">${img(r, 'broderie-coeur', 'Tambour à broder avec un cœur brodé au fil rouge', { sizes: '(min-width: 900px) 34vw, 90vw' })}</figure>
+    <figure class="chris-photo reveler">${img(r, 'berceau', 'Berceau habillé d’un drap à motifs d’oursons, avec sa couverture et son doudou assortis', { sizes: '(min-width: 900px) 34vw, 90vw' })}</figure>
     <div class="chris-texte reveler">
       <p class="surtitre">${I.fil} Qui suis-je</p>
       <h2>Moi, c’est <em>Chris</em></h2>
-      <p>Je couds depuis ${E.ville}, entre Salon et l’étang de Berre. Créa de Chris est née d’une envie simple : faire des choses que les enfants gardent, qu’ils reconnaissent et qu’ils aiment, et que les parents ne trouvent pas en magasin.</p>
-      <p>Pas de série, pas de stock : chaque sac, chaque doudou est cousu pour un enfant en particulier. Ma devise tient en quelques mots : <b>${esc(E.devise)}</b>.</p>
+      <p>Je couds à ${E.ville}. Articles de naissance, cadeaux personnalisés, retouches : chaque pièce est réalisée avec soin, passion et minutie.</p>
+      <p>Chaque création est unique, pensée pour votre bébé et faite avec amour. Idéal pour un cadeau de naissance, un anniversaire, ou juste pour faire plaisir.</p>
       <p class="signature">Chris</p>
     </div>
   </div>
 </section>
 
-<section class="section section-nuit" id="commander">
+<section class="section section-nuit" id="contact">
   <div class="cadre commande">
     <div class="commande-texte reveler">
-      <p class="surtitre">${I.fil} Commander</p>
-      <h2>Votre demande, <em>en une minute</em></h2>
-      <p>Choisissez votre création : le message WhatsApp s’écrit tout seul, vous n’avez plus qu’à l’envoyer. Je vous réponds avec le prix et le délai, et rien n’est engagé tant que vous n’avez pas dit oui.</p>
+      <p class="surtitre">${I.fil} Me joindre</p>
+      <h2>Une question, <em>une commande ?</em></h2>
+      <p>Prise de commande sur rendez-vous, à ${E.ville}. Le plus simple : un message sur WhatsApp, ou un appel.</p>
+      <div class="actions">
+        <a class="bouton bouton-wa" href="${WA}" target="_blank" rel="noopener">${I.wa} Écrire sur WhatsApp</a>
+        <a class="bouton bouton-or" href="tel:${E.tel}">${I.tel} ${E.telAffiche}</a>
+      </div>
       <p class="commande-aide">Vous préférez Messenger ? <a href="${E.messenger}" target="_blank" rel="noopener">Écrivez-moi ici</a>.</p>
     </div>
-    <div class="commande-choix reveler">
-      ${NOMS_MODELES.map(([v, t]) => `<a href="#commander" data-commander="${v}"><span>${esc(t)}</span>${I.wa}</a>`).join('\n      ')}
+    <div class="marches reveler">
+      <h3>Me retrouver <em>sur les marchés</em></h3>
+      <ul>
+        ${MARCHES.map((m) => `<li${m.jusquau ? ` data-jusquau="${m.jusquau}"` : ''}><b>${m.quand}</b><span>${m.ou}</span></li>`).join('\n        ')}
+      </ul>
     </div>
   </div>
 </section>`,
@@ -353,7 +386,7 @@ ajouter('mentions-legales/', {
   <p>${E.dirigeante} — entrepreneuse individuelle, nom commercial « ${E.nom} »<br>${E.ville} (${E.codePostal})<br>SIRET : ${E.siret}</p>
   <p>Directrice de la publication : ${E.dirigeante}</p>
   <h2>Hébergement</h2><p>[À compléter à la mise en ligne]</p>
-  <h2>Crédits</h2><p>Photographies : Unsplash, en attendant les photos des créations. Réalisation : LocWeb.</p>
+  <h2>Crédits</h2><p>Photographies : Créa de Chris et Unsplash. Réalisation : LocWeb.</p>
 </div></section>`,
 });
 

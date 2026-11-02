@@ -26,10 +26,13 @@ PHOTOS = {
     '1640746942093-cec8e647596d': 'tissus-plies',
     '1578353022142-09264fd64295': 'fils-et-ciseaux',
     '1644288054812-aa3ec742c419': 'couture-noir-et-blanc',
+    '1623069485778-ca15fe447464': 'gigoteuses-suspendues',
 }
 
-dims = {}
+dims = json.load(open(os.path.join(ICI, 'photos.json')))
 for src, nom in PHOTOS.items():
+    # Seules les photos presentes dans le dossier sont refaites.
+    if not os.path.exists(os.path.join(SRC, src + '.jpg')): continue
     im = ImageOps.exif_transpose(Image.open(os.path.join(SRC, src + '.jpg'))).convert('RGB')
     for larg in (1600, 800):
         c = im if im.width <= larg else im.resize((larg, round(im.height * larg / im.width)), Image.LANCZOS)
@@ -38,8 +41,5 @@ for src, nom in PHOTOS.items():
     dims[nom] = {'l': big.width, 'h': big.height}
     print(f'{nom:30s} {im.width}x{im.height}')
 
-# Image de partage 1200x630 : les mains a la machine.
-im = Image.open(os.path.join(SRC, '1773511237767-0e324389922a.jpg')).convert('RGB')
-h = round(im.width * 630 / 1200); y = max(0, round(im.height * 0.5 - h / 2))
-im.crop((0, y, im.width, y + h)).resize((1200, 630), Image.LANCZOS).save(os.path.join(DST, 'partage.jpg'), quality=82)
+# L'image de partage est faite par photos_elle.py, a partir de ses photos.
 json.dump(dims, open(os.path.join(ICI, 'photos.json'), 'w'), indent=0)
