@@ -27,6 +27,9 @@ PHOTOS = {
     '1578353022142-09264fd64295': 'fils-et-ciseaux',
     '1644288054812-aa3ec742c419': 'couture-noir-et-blanc',
     '1623069485778-ca15fe447464': 'gigoteuses-suspendues',
+    '1776741146949-cda9f2bc5978': 'lit-bebe',
+    '1767779734171-2e70034d7c4d': 'bebe-gilet',
+    '1773747488505-b205bcd23b5e': 'etoiles-tissu',
 }
 
 dims = json.load(open(os.path.join(ICI, 'photos.json')))

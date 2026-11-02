@@ -14,7 +14,7 @@ const ICI = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Z]:)
 const PROD = process.env.PROD === '1';
 const URL_SITE = PROD ? 'https://www.creadechris.fr/' : 'https://shigyn.github.io/creadechris/';
 const PHOTOS = JSON.parse(fs.readFileSync(path.join(ICI, '_source', 'photos.json'), 'utf8'));
-const V = '5';
+const V = '6';
 
 const E = {
   nom: 'Créa de Chris',
@@ -29,11 +29,11 @@ const E = {
   departement: 'Bouches-du-Rhône',
   facebook: 'https://www.facebook.com/christelle.poupardin.5',
   messenger: 'https://m.me/christelle.poupardin.5',
-  // Sa carte dit @creadechris, ses deux flyers Les.creas_de_chris : a confirmer.
-  instagram: 'https://www.instagram.com/les.creas_de_chris/',
+  // Confirme par elle (ses flyers disent encore Les.creas_de_chris).
+  instagram: 'https://www.instagram.com/creadechris/',
   telAffiche: '06 29 35 80 92',
   tel: '+33629358092',
-  // Le numero de ses flyers : a confirmer qu'il a bien WhatsApp.
+  // Confirme par elle.
   whatsapp: '33629358092',
 };
 
@@ -58,7 +58,7 @@ const I = {
   fil: '<svg class="fil" viewBox="0 0 140 24" aria-hidden="true"><path d="M2 14c18-12 30 8 48-2s30-10 46 2 28 4 42-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="5 5"/></svg>',
 };
 
-/* Sa carte, telle quelle : memes groupes, memes prix. */
+/* Sa carte, puis les prix de son message du 2026-11-02. Prix null : pas encore donne. */
 const CARTE = [
   {
     titre: 'Les indispensables', photo: ['gigoteuses-suspendues', 'Gigoteuses de couleurs douces suspendues à un lit de bébé'],
@@ -72,9 +72,19 @@ const CARTE = [
     titre: 'Pratique au quotidien', photo: ['housse-matelas', 'Matelas à langer et sa housse à motifs d’oursons'],
     articles: [['lingettes', '10 lingettes + panier', 20], ['housse-matelas', 'Housse matelas à langer', 15], ['matelas-nomade', 'Matelas nomade', 20], ['bavoir', 'Bavoir', 7], ['anti-bavouille', 'Anti-bavouille (lot de 2)', 17]],
   },
+  {
+    titre: 'Dodo et crèche', photo: ['lit-bebe', 'Lit de bébé blanc dans une chambre'],
+    articles: [['couette-bebe', 'Couette lit bébé', 45], ['couette-enfant', 'Couette lit enfant', 125], ['set-creche', 'Sac à dos + doudou', 45], ['trousse', 'Trousse de toilette', 14], ['anneau', 'Anneau de dentition', 5]],
+  },
+  {
+    titre: 'Gilet du berger', photo: ['bebe-gilet', 'Bébé emmitouflé dans un vêtement doux'],
+    articles: [['gilet-bebe', 'Gilet du berger bébé', 20], ['gilet-2-6', 'Gilet du berger 2 à 6 ans', 25], ['gilet-6-14', 'Gilet du berger 6 à 14 ans', 30], ['gilet-adulte', 'Gilet du berger adulte', 45]],
+  },
+  {
+    titre: 'Noël et sacs', photo: ['etoiles-tissu', 'Étoiles de Noël en tissu rouge et blanc'],
+    articles: [['boule-noel', 'Boule de Noël personnalisée', 4.5], ['chaussettes-noel', 'Chaussettes de Noël', null], ['sac-femme', 'Sac en jean et tissu', 75]],
+  },
 ];
-/* Cites dans son message, absents de sa carte : pas encore de prix. */
-const SUR_DEMANDE = [['set-creche', 'Set crèche (sac à dos + doudou)'], ['couette-bebe', 'Couette lit bébé'], ['couette-enfant', 'Couette lit enfant'], ['trousse', 'Trousse de toilette'], ['anneau', 'Anneau de dentition'], ['boule-noel', 'Boule de Noël'], ['chaussettes-noel', 'Chaussettes de Noël'], ['gilet-berger', 'Gilet du berger'], ['sac-femme', 'Sac femme en jean et tissu']];
 const SERVICES = [
   ['retouche', 'Une retouche', 'Retouches du quotidien', 'Ourlets, fermetures, ajustements, transformations.'],
   ['sur-mesure', 'Une création sur mesure', 'Créations sur mesure', 'Vêtements, accessoires, décoration textile.'],
@@ -83,10 +93,10 @@ const SERVICES = [
 ];
 /* Une date passee disparait toute seule (site.js). */
 const MARCHES = [
-  { quand: 'Le 8 novembre', ou: 'Salon-de-Provence', jusquau: '2026-11-08' },
+  { quand: 'Le 8 novembre', ou: 'Salon-de-Provence, Fontaine Moussue', jusquau: '2026-11-08' },
   { quand: 'À partir de fin novembre', ou: 'Dans le Gard' },
 ];
-const prix = (n) => n.toLocaleString('fr-FR', { minimumFractionDigits: n % 1 ? 2 : 0 }) + ' €';
+const prix = (n) => (n === null ? 'Sur demande' : n.toLocaleString('fr-FR', { minimumFractionDigits: n % 1 ? 2 : 0 }) + ' €');
 const WA = `https://wa.me/${E.whatsapp}`;
 const TISSUS = [['rose', 'Rose poudré'], ['nuit', 'Bleu nuit'], ['lin', 'Lin naturel'], ['sauge', 'Vert sauge']];
 const FILS = [['blanc', 'Blanc'], ['or', 'Doré'], ['rose', 'Rose'], ['nuit', 'Bleu nuit']];
@@ -106,7 +116,7 @@ const ENTITE = {
   address: { '@type': 'PostalAddress', addressLocality: E.ville, postalCode: E.codePostal, addressRegion: 'Provence-Alpes-Côte d’Azur', addressCountry: 'FR' },
   areaServed: ['Lançon-de-Provence', 'Salon-de-Provence', 'Pélissanne', 'La Fare-les-Oliviers', 'Rognac', 'Berre-l’Étang', 'Bouches-du-Rhône'].map((v) => ({ '@type': 'Place', name: v })),
   sameAs: [E.facebook, E.instagram],
-  makesOffer: CARTE.flatMap((g) => g.articles).map(([, n, p]) => ({ '@type': 'Offer', price: p, priceCurrency: 'EUR', itemOffered: { '@type': 'Product', name: n } })),
+  makesOffer: CARTE.flatMap((g) => g.articles).filter((a) => a[2] !== null).map(([, n, p]) => ({ '@type': 'Offer', price: p, priceCurrency: 'EUR', itemOffered: { '@type': 'Product', name: n } })),
 };
 
 /* ---------------- gabarit ---------------- */
@@ -195,8 +205,7 @@ ${corps(r)}
     <label class="champ"><span>Ce que vous voulez</span>
       <select name="modele" data-commande-modele required>
         <option value="">Choisissez…</option>
-        ${CARTE.map((g) => `<optgroup label="${esc(g.titre)}">${g.articles.map(([v, t, p]) => `<option value="${v}">${esc(t)} (${prix(p)})</option>`).join('')}</optgroup>`).join('')}
-        <optgroup label="Sur demande">${SUR_DEMANDE.map(([v, t]) => `<option value="${v}">${esc(t)}</option>`).join('')}</optgroup>
+        ${CARTE.map((g) => `<optgroup label="${esc(g.titre)}">${g.articles.map(([v, t, p]) => `<option value="${v}">${esc(t)}${p === null ? '' : ` (${prix(p)})`}</option>`).join('')}</optgroup>`).join('')}
         <optgroup label="Retouches et sur mesure">${SERVICES.map(([v, t]) => `<option value="${v}">${esc(t)}</option>`).join('')}</optgroup>
         <option value="autre">Autre chose</option>
       </select>
@@ -268,15 +277,9 @@ ajouter('', {
         <figure>${img(r, g.photo[0], g.photo[1], { sizes: '(min-width: 1100px) 30vw, (min-width: 720px) 45vw, 90vw' })}</figure>
         <h3>${g.titre}</h3>
         <ul>
-          ${g.articles.map(([id, nom, p]) => `<li><a class="article" href="#contact" data-commander="${id}"><span class="article-nom">${esc(nom)}</span><span class="article-prix">${prix(p)}</span><span class="article-cmd">Commander</span></a></li>`).join('\n          ')}
+          ${g.articles.map(([id, nom, p]) => `<li><a class="article" href="#contact" data-commander="${id}"><span class="article-nom">${esc(nom)}</span><span class="article-prix${p === null ? ' article-prix-texte' : ''}">${prix(p)}</span><span class="article-cmd">Commander</span></a></li>`).join('\n          ')}
         </ul>
       </div>`).join('\n      ')}
-    </div>
-    <div class="aussi reveler">
-      <h3>Et aussi, <em>prix sur demande</em></h3>
-      <div class="aussi-liste">
-        ${SUR_DEMANDE.map(([id, nom]) => `<a href="#contact" data-commander="${id}">${esc(nom)}</a>`).join('\n        ')}
-      </div>
     </div>
   </div>
 </section>

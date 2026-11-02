@@ -126,14 +126,9 @@ p { margin: 0 0 1em; }
 .article:hover { background: var(--papier); }
 .article-nom { font-weight: 600; line-height: 1.25; }
 .article-prix { font: 500 1.15rem var(--t-display); font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--encre); }
+.article-prix-texte { font: 600 .84rem var(--t-corps); color: var(--gris); }
 .article-cmd { padding: 6px 11px; border-radius: 999px; border: 1.5px solid var(--rose); color: var(--rose); font-size: .78rem; font-weight: 700; transition: background-color .2s, color .2s; }
 .article:hover .article-cmd { background: var(--rose); color: #fff; }
-.aussi { margin-top: clamp(40px, 6vw, 64px); }
-.aussi h3 { font-size: 1.5rem; }
-.aussi h3 em { font-style: italic; color: var(--rose); }
-.aussi-liste { display: flex; flex-wrap: wrap; gap: 10px; }
-.aussi-liste a { padding: 9px 16px; border: 1.5px dashed var(--or); border-radius: 999px; text-decoration: none; font-weight: 600; font-size: .95rem; transition: background-color .2s; }
-.aussi-liste a:hover { background: var(--poudre); }
 
 /* Retouches et sur mesure. */
 .services { display: grid; grid-template-columns: .85fr 1fr; gap: clamp(32px, 6vw, 88px); align-items: center; }

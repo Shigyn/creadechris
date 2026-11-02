@@ -66,5 +66,17 @@
 "housse-matelas": {
 "l": 712,
 "h": 400
+},
+"lit-bebe": {
+"l": 1600,
+"h": 2400
+},
+"bebe-gilet": {
+"l": 1600,
+"h": 2844
+},
+"etoiles-tissu": {
+"l": 1600,
+"h": 2844
 }
 }
