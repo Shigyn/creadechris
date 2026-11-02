@@ -4,8 +4,8 @@
 //     PROD=1 node build.mjs   -> mise en ligne
 //  Articles et prix : sa carte (2026-11-02). Services, -5 %, « sur
 //  rendez-vous » : ses flyers. Marches et articles sans prix : son message.
-//  Son adresse (729 chemin Notre-Dame) figure sur ses flyers mais reste
-//  hors du site tant qu'elle n'a pas dit oui : seulement la commune.
+//  Son adresse figure sur ses flyers mais reste hors du site et du depot
+//  tant qu'elle n'a pas dit oui : seulement la commune.
 // ===================================================================
 import fs from 'node:fs';
 import path from 'node:path';
@@ -14,7 +14,7 @@ const ICI = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Z]:)
 const PROD = process.env.PROD === '1';
 const URL_SITE = PROD ? 'https://www.creadechris.fr/' : 'https://shigyn.github.io/creadechris/';
 const PHOTOS = JSON.parse(fs.readFileSync(path.join(ICI, '_source', 'photos.json'), 'utf8'));
-const V = '8';
+const V = '9';
 
 const E = {
   nom: 'Créa de Chris',
@@ -61,27 +61,27 @@ const I = {
 /* Sa carte, puis les prix de son message du 2026-11-02. Prix null : pas encore donne. */
 const CARTE = [
   {
-    titre: 'Les indispensables', photo: ['gigoteuses-suspendues', 'Gigoteuses de couleurs douces suspendues à un lit de bébé'],
+    titre: 'Les indispensables', photo: ['sac-a-langer-foret', 'Sac à langer matelassé à motifs d’animaux de la forêt, fermeture rose'],
     articles: [['peignoir', 'Peignoir', 25], ['gigoteuse-ete', 'Gigoteuse été', 35], ['gigoteuse-hiver', 'Gigoteuse hiver', 45], ['nid-d-ange', 'Nid d’ange', 40], ['sac-a-langer', 'Sac à langer', 65], ['couverture', 'Couverture', 45]],
   },
   {
-    titre: 'Idées cadeaux', photo: ['doudous-lapins-panier', 'Doudous lapins en tissu dans un panier'],
+    titre: 'Idées cadeaux', photo: ['attaches-tetine-prenom', 'Attaches tétine en perles avec un prénom et anneaux de dentition assortis'],
     articles: [['doudou', 'Doudou', 22], ['kit-naissance', 'Kit naissance', 28], ['sortie-de-bain', 'Sortie de bain', 25], ['attache-tetine', 'Attache tétine', 15.5], ['protege-carnet', 'Protège carnet', 13.5]],
   },
   {
-    titre: 'Pratique au quotidien', photo: ['housse-matelas', 'Matelas à langer et sa housse à motifs d’oursons'],
+    titre: 'Pratique au quotidien', photo: ['lingettes-lavables', 'Lingettes lavables imprimées en éponge rose'],
     articles: [['lingettes', '10 lingettes + panier', 20], ['housse-matelas', 'Housse matelas à langer', 15], ['matelas-nomade', 'Matelas nomade', 20], ['bavoir', 'Bavoir', 7], ['anti-bavouille', 'Anti-bavouille (lot de 2)', 17]],
   },
   {
-    titre: 'Dodo et crèche', photo: ['lit-bebe', 'Lit de bébé blanc dans une chambre'],
+    titre: 'Dodo et crèche', photo: ['berceau-oursons', 'Berceau habillé d’un drap à motifs d’oursons, avec sa couverture et son doudou assortis'],
     articles: [['couette-bebe', 'Couette lit bébé', 45], ['couette-enfant', 'Couette lit enfant', 125], ['set-creche', 'Sac à dos avec doudou', 45], ['trousse', 'Trousse de toilette', 14], ['anneau', 'Anneau de dentition', 5]],
   },
   {
-    titre: 'Gilet du berger', photo: ['bebe-gilet', 'Bébé emmitouflé dans un vêtement doux'],
+    titre: 'Gilet du berger', photo: ['gilet-berger-bouclette', 'Gilet du berger en bouclette camel, doublé d’un tissu à petits animaux'],
     articles: [['gilet-bebe', 'Gilet du berger bébé', 20], ['gilet-2-6', 'Gilet du berger 2 à 6 ans', 25], ['gilet-6-14', 'Gilet du berger 6 à 14 ans', 30], ['gilet-adulte', 'Gilet du berger adulte', 45]],
   },
   {
-    titre: 'Noël et sacs', photo: ['etoiles-tissu', 'Étoiles de Noël en tissu rouge et blanc'],
+    titre: 'Noël et sacs', photo: ['boule-de-noel', 'Boule de Noël personnalisée « Joyeux Noël »'],
     articles: [['boule-noel', 'Boule de Noël personnalisée', 4.5], ['chaussettes-noel', 'Chaussette de Noël garnie', 16], ['sac-femme', 'Sac en jean et tissu', 75]],
   },
 ];
@@ -254,7 +254,7 @@ ajouter('', {
   classe: 'accueil',
   corps: (r) => `
 <section class="hero">
-  <div class="hero-photo">${img(r, 'table-a-langer', 'Table à langer habillée d’un matelas et d’une housse à motifs d’oursons, panier de lingettes assorties', { eager: true, sizes: '(min-width: 900px) 58vw, 100vw' })}</div>
+  <div class="hero-photo">${img(r, 'chambre-table-a-langer', 'Chambre de bébé : table à langer habillée d’une housse à motifs d’oursons, doudous et mobile', { eager: true, sizes: '(min-width: 900px) 58vw, 100vw' })}</div>
   <div class="cadre hero-in">
     <div class="hero-texte">
       <p class="surtitre hero-anim">${I.pin} ${esc(E.activite)} · ${E.ville}</p>
@@ -356,7 +356,7 @@ ajouter('', {
 
 <section class="section" id="chris">
   <div class="cadre chris">
-    <figure class="chris-photo reveler">${img(r, 'berceau', 'Berceau habillé d’un drap à motifs d’oursons, avec sa couverture et son doudou assortis', { sizes: '(min-width: 900px) 34vw, 90vw' })}</figure>
+    <figure class="chris-photo reveler">${img(r, 'peignoir-brode', 'Petit peignoir blanc en éponge, brodé d’un prénom en vert', { sizes: '(min-width: 900px) 34vw, 90vw' })}</figure>
     <div class="chris-texte reveler">
       <p class="surtitre">${I.fil} Qui suis-je</p>
       <h2>Moi, c’est <em>Chris</em></h2>
