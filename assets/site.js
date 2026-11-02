@@ -110,6 +110,7 @@
         f.get('prenom') ? 'Prénom à broder : ' + f.get('prenom') : '',
         f.get('quand') ? 'Pour : ' + f.get('quand') : '',
         f.get('details') ? 'Détails : ' + f.get('details') : '',
+        'Récupération : ' + f.get('remise'),
         f.get('premiere') ? 'C’est ma première commande (−5 %)' : '',
         f.get('nom') ? 'Merci ! ' + f.get('nom') : 'Merci !',
       ].filter(Boolean).join('\n');

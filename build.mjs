@@ -14,7 +14,7 @@ const ICI = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Z]:)
 const PROD = process.env.PROD === '1';
 const URL_SITE = PROD ? 'https://www.creadechris.fr/' : 'https://shigyn.github.io/creadechris/';
 const PHOTOS = JSON.parse(fs.readFileSync(path.join(ICI, '_source', 'photos.json'), 'utf8'));
-const V = '6';
+const V = '7';
 
 const E = {
   nom: 'Créa de Chris',
@@ -74,7 +74,7 @@ const CARTE = [
   },
   {
     titre: 'Dodo et crèche', photo: ['lit-bebe', 'Lit de bébé blanc dans une chambre'],
-    articles: [['couette-bebe', 'Couette lit bébé', 45], ['couette-enfant', 'Couette lit enfant', 125], ['set-creche', 'Sac à dos + doudou', 45], ['trousse', 'Trousse de toilette', 14], ['anneau', 'Anneau de dentition', 5]],
+    articles: [['couette-bebe', 'Couette lit bébé', 45], ['couette-enfant', 'Couette lit enfant', 125], ['set-creche', 'Sac à dos avec doudou', 45], ['trousse', 'Trousse de toilette', 14], ['anneau', 'Anneau de dentition', 5]],
   },
   {
     titre: 'Gilet du berger', photo: ['bebe-gilet', 'Bébé emmitouflé dans un vêtement doux'],
@@ -82,7 +82,7 @@ const CARTE = [
   },
   {
     titre: 'Noël et sacs', photo: ['etoiles-tissu', 'Étoiles de Noël en tissu rouge et blanc'],
-    articles: [['boule-noel', 'Boule de Noël personnalisée', 4.5], ['chaussettes-noel', 'Chaussettes de Noël', null], ['sac-femme', 'Sac en jean et tissu', 75]],
+    articles: [['boule-noel', 'Boule de Noël personnalisée', 4.5], ['chaussettes-noel', 'Chaussette de Noël garnie', 16], ['sac-femme', 'Sac en jean et tissu', 75]],
   },
 ];
 const SERVICES = [
@@ -216,6 +216,7 @@ ${corps(r)}
     </div>
     <label class="champ"><span>Tissu, couleurs, votre idée…</span><textarea name="details" rows="3" data-commande-details></textarea></label>
     <label class="champ"><span>Votre prénom</span><input type="text" name="nom" autocomplete="given-name"></label>
+    <label class="champ"><span>Pour la récupérer</span><select name="remise"><option>En main propre à ${E.ville}</option><option>En relais Pick Up</option></select></label>
     <label class="coche"><input type="checkbox" name="premiere"><span>C’est ma première commande (−5 %)</span></label>
     <button class="bouton bouton-wa" type="submit">${I.wa} Envoyer sur WhatsApp</button>
     <p class="fenetre-note">WhatsApp s’ouvre avec votre message déjà écrit : vous n’avez plus qu’à appuyer sur envoyer. Rien n’est engagé : je vous réponds pour les tissus et le délai.</p>
@@ -339,7 +340,7 @@ ajouter('', {
       <li class="reveler"><b>Vous choisissez</b><span>L’article, et le prénom à broder si vous le souhaitez. Le message WhatsApp s’écrit tout seul.</span></li>
       <li class="reveler"><b>On en parle</b><span>Tissus, délai, rendez-vous : on fixe tout ensemble avant que je commence.</span></li>
       <li class="reveler"><b>Je couds</b><span>Chaque pièce est réalisée à la main, à ${E.ville}, avec soin et minutie.</span></li>
-      <li class="reveler"><b>Vous récupérez</b><span>On convient ensemble de la remise de votre commande.</span></li>
+      <li class="reveler"><b>Vous récupérez</b><span>En main propre à ${E.ville}, ou par envoi en relais Pick Up.</span></li>
     </ol>
   </div>
 </section>
