@@ -12,9 +12,9 @@ import path from 'node:path';
 
 const ICI = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Z]:)/, '$1');
 const PROD = process.env.PROD === '1';
-const URL_SITE = PROD ? 'https://www.creadechris.fr/' : 'https://shigyn.github.io/creadechris/';
+const URL_SITE = PROD ? 'https://www.creadechris.com/' : 'https://shigyn.github.io/creadechris/';
 const PHOTOS = JSON.parse(fs.readFileSync(path.join(ICI, '_source', 'photos.json'), 'utf8'));
-const V = '10';
+const V = '11';
 
 const E = {
   nom: 'Créa de Chris',
@@ -412,7 +412,7 @@ ajouter('mentions-legales/', {
   <h2>Éditrice du site</h2>
   <p>${E.dirigeante} — entrepreneuse individuelle, nom commercial « ${E.nom} »<br>${E.ville} (${E.codePostal})<br>SIRET : ${E.siret}</p>
   <p>Directrice de la publication : ${E.dirigeante}</p>
-  <h2>Hébergement</h2><p>[À compléter à la mise en ligne]</p>
+  <h2>Hébergement</h2><p>GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis. Les articles et les photos sont enregistrés chez Supabase, Inc. (serveurs dans l’Union européenne).</p>
   <h2>Crédits</h2><p>Photographies : Créa de Chris et Unsplash. Réalisation : LocWeb.</p>
 </div></section>`,
 });
@@ -424,7 +424,7 @@ ajouter('confidentialite/', {
 <section class="section"><div class="cadre etroit texte-riche">
   <h1>Politique de confidentialité</h1>
   <h2>Les données recueillies</h2><p>Le formulaire de commande ne fait que préparer un message WhatsApp : rien n’est enregistré par le site. Ce que vous m’envoyez ensuite sert uniquement à vous répondre et à traiter votre commande.</p>
-  <h2>Mesure d’audience</h2><p>Le site utilise Google Analytics pour mesurer sa fréquentation de façon anonymisée.</p>
+  <h2>Cookies</h2><p>Le site n’utilise ni cookie publicitaire ni mesure d’audience. Les polices de caractères sont fournies par Google Fonts, qui reçoit à cette occasion votre adresse IP.</p>
   <h2>Vos droits</h2><p>Vous pouvez demander l’accès, la rectification ou la suppression de vos données en écrivant à ${E.nom} par Messenger. Aucune donnée n’est vendue ni cédée.</p>
 </div></section>`,
 });
