@@ -14,7 +14,7 @@ const ICI = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Z]:)
 const PROD = process.env.PROD === '1';
 const URL_SITE = PROD ? 'https://www.creadechris.fr/' : 'https://shigyn.github.io/creadechris/';
 const PHOTOS = JSON.parse(fs.readFileSync(path.join(ICI, '_source', 'photos.json'), 'utf8'));
-const V = '7';
+const V = '8';
 
 const E = {
   nom: 'Créa de Chris',
@@ -85,6 +85,8 @@ const CARTE = [
     articles: [['boule-noel', 'Boule de Noël personnalisée', 4.5], ['chaussettes-noel', 'Chaussette de Noël garnie', 16], ['sac-femme', 'Sac en jean et tissu', 75]],
   },
 ];
+/* Cites dans son message, pas encore de prix. */
+const AUSSI = [['pilou', 'Pilou pilou enfant'], ['vetements-ete', 'Vêtements d’été'], ['pinces', 'Pinces à cheveux'], ['chouchous', 'Chouchous'], ['bandeaux', 'Bandeaux'], ['snoods', 'Snoods']];
 const SERVICES = [
   ['retouche', 'Une retouche', 'Retouches du quotidien', 'Ourlets, fermetures, ajustements, transformations.'],
   ['sur-mesure', 'Une création sur mesure', 'Créations sur mesure', 'Vêtements, accessoires, décoration textile.'],
@@ -206,6 +208,7 @@ ${corps(r)}
       <select name="modele" data-commande-modele required>
         <option value="">Choisissez…</option>
         ${CARTE.map((g) => `<optgroup label="${esc(g.titre)}">${g.articles.map(([v, t, p]) => `<option value="${v}">${esc(t)}${p === null ? '' : ` (${prix(p)})`}</option>`).join('')}</optgroup>`).join('')}
+        <optgroup label="Sur demande">${AUSSI.map(([v, t]) => `<option value="${v}">${esc(t)}</option>`).join('')}</optgroup>
         <optgroup label="Retouches et sur mesure">${SERVICES.map(([v, t]) => `<option value="${v}">${esc(t)}</option>`).join('')}</optgroup>
         <option value="autre">Autre chose</option>
       </select>
@@ -281,6 +284,12 @@ ajouter('', {
           ${g.articles.map(([id, nom, p]) => `<li><a class="article" href="#contact" data-commander="${id}"><span class="article-nom">${esc(nom)}</span><span class="article-prix${p === null ? ' article-prix-texte' : ''}">${prix(p)}</span><span class="article-cmd">Commander</span></a></li>`).join('\n          ')}
         </ul>
       </div>`).join('\n      ')}
+    </div>
+    <div class="aussi reveler">
+      <h3>Et bien d’autres créations, <em>prix sur demande</em></h3>
+      <div class="aussi-liste">
+        ${AUSSI.map(([id, nom]) => `<a href="#contact" data-commander="${id}">${esc(nom)}</a>`).join('\n        ')}
+      </div>
     </div>
   </div>
 </section>
