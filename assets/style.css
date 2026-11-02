@@ -140,6 +140,8 @@ p { margin: 0 0 1em; }
 [data-horaires] { margin-top: 32px; }
 [data-horaires][hidden] { display: none; }
 
+.carte-note { margin: 28px 0 0; font-size: .9rem; color: var(--gris); }
+
 /* La galerie. */
 .galerie { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(150px, 45%), 1fr)); gap: 16px; }
 @media (min-width: 720px) { .galerie { grid-template-columns: repeat(4, 1fr); } }

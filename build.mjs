@@ -14,7 +14,7 @@ const ICI = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Z]:)
 const PROD = process.env.PROD === '1';
 const URL_SITE = PROD ? 'https://www.creadechris.com/' : 'https://shigyn.github.io/creadechris/';
 const PHOTOS = JSON.parse(fs.readFileSync(path.join(ICI, '_source', 'photos.json'), 'utf8'));
-const V = '12';
+const V = '13';
 
 const E = {
   nom: 'Créa de Chris',
@@ -33,6 +33,8 @@ const E = {
   instagram: 'https://www.instagram.com/creadechris/',
   telAffiche: '06 29 35 80 92',
   tel: '+33629358092',
+  // Celui de son ancien site creadechris.fr, deja public.
+  email: 'creadechris@gmail.com',
   // Confirme par elle.
   whatsapp: '33629358092',
 };
@@ -194,7 +196,7 @@ ${corps(r)}
   </div>
   <div class="cadre pied-bas">
     <span>© ${new Date().getFullYear()} ${esc(E.nom)}</span>
-    <span><a href="${r}mentions-legales/">Mentions légales</a> · <a href="${r}confidentialite/">Confidentialité</a>${PROD ? ' · <a class="lien-locweb" href="https://locweb.fr" target="_blank" rel="noopener">Site réalisé par LocWeb</a>' : ''}</span>
+    <span><a href="${r}mentions-legales/">Mentions légales</a> · <a href="${r}conditions-de-vente/">Conditions de vente</a> · <a href="${r}confidentialite/">Confidentialité</a>${PROD ? ' · <a class="lien-locweb" href="https://locweb.fr" target="_blank" rel="noopener">Site réalisé par LocWeb</a>' : ''}</span>
   </div>
 </footer>
 
@@ -293,6 +295,7 @@ ajouter('', {
         ${AUSSI.map(([id, nom]) => `<a href="#contact" data-commander="${id}">${esc(nom)}</a>`).join('\n        ')}
       </div>
     </div>
+    <p class="carte-note reveler">Prix en euros, toutes taxes comprises, hors frais d’envoi. <a href="${r}conditions-de-vente/">Conditions de vente</a></p>
   </div>
 </section>
 
@@ -416,10 +419,29 @@ ajouter('mentions-legales/', {
 <section class="section"><div class="cadre etroit texte-riche">
   <h1>Mentions légales</h1>
   <h2>Éditrice du site</h2>
-  <p>${E.dirigeante} — entrepreneuse individuelle, nom commercial « ${E.nom} »<br>${E.ville} (${E.codePostal})<br>SIRET : ${E.siret}</p>
+  <p>${E.dirigeante} — entrepreneuse individuelle, nom commercial « ${E.nom} »<br>${E.ville} (${E.codePostal})<br>Téléphone : <a href="tel:${E.tel}">${E.telAffiche}</a><br>E-mail : <a href="mailto:${E.email}">${E.email}</a><br>SIRET : ${E.siret}</p>
   <p>Directrice de la publication : ${E.dirigeante}</p>
   <h2>Hébergement</h2><p>GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis. Les articles et les photos sont enregistrés chez Supabase, Inc. (serveurs dans l’Union européenne).</p>
-  <h2>Crédits</h2><p>Photographies : Créa de Chris et Unsplash. Réalisation : LocWeb.</p>
+  <h2>Crédits</h2><p>Photographies : Créa de Chris et Unsplash. Réalisation : <a href="https://locweb.fr" target="_blank" rel="noopener">LocWeb</a>.</p>
+  <h2>Propriété</h2><p>Les textes et les photos de ce site appartiennent à ${E.nom}. Merci de ne pas les reprendre sans son accord.</p>
+</div></section>`,
+});
+
+ajouter('conditions-de-vente/', {
+  titre: 'Conditions de vente — Créa de Chris',
+  description: `Conditions de vente des créations et retouches de ${E.nom} : commande, prix, envoi, rétractation et garanties.`,
+  corps: () => `
+<section class="section"><div class="cadre etroit texte-riche">
+  <h1>Conditions de vente</h1>
+  <p>Ces conditions s’appliquent aux créations et aux retouches de ${E.dirigeante} (${E.nom}), SIRET ${E.siret}.</p>
+  <h2>Commande</h2><p>Le site présente les articles et leurs prix, mais on n’y paie pas et on n’y commande pas directement : il prépare un message. La commande est confirmée quand nous nous sommes mises d’accord sur l’article, le tissu, la personnalisation, le prix, le délai et la remise.</p>
+  <h2>Prix</h2><p>Les prix sont en euros, toutes taxes comprises, hors frais d’envoi. Le prix qui s’applique est celui confirmé au moment de la commande. Les articles sur demande et les retouches font l’objet d’un prix donné avant de commencer.</p>
+  <h2>Paiement</h2><p>Le moyen et le moment du paiement sont convenus au moment de la commande.</p>
+  <h2>Remise et envoi</h2><p>En main propre à ${E.ville}, ou par envoi en relais Pick Up : les frais dépendent du poids, à partir de 5 €, et sont annoncés avant la commande. Les délais sont confirmés à la commande.</p>
+  <h2>Droit de rétractation</h2><p>Pour un article commandé à distance, vous disposez de 14 jours après sa réception pour changer d’avis, sans avoir à vous justifier : prévenez-moi par écrit (WhatsApp, Messenger ou e-mail), puis renvoyez l’article sous 14 jours, à vos frais. Je vous rembourse dans les 14 jours, frais d’envoi initiaux compris, au tarif standard.</p>
+  <p><b>Ce droit ne s’applique pas aux articles faits selon vos choix ou personnalisés</b>, par exemple brodés à un prénom ou réalisés dans un tissu choisi pour vous (article L221-28 du Code de la consommation), ni aux retouches.</p>
+  <h2>Garanties</h2><p>Tous les articles bénéficient de la garantie légale de conformité (2 ans, articles L217-3 et suivants du Code de la consommation) et de la garantie des vices cachés (articles 1641 et suivants du Code civil). En cas de problème, contactez-moi : réparation, remplacement ou remboursement selon les cas prévus par la loi.</p>
+  <h2>Réclamation et médiation</h2><p>Pour toute réclamation : <a href="tel:${E.tel}">${E.telAffiche}</a> ou <a href="mailto:${E.email}">${E.email}</a>. En cas de litige, vous pouvez recourir gratuitement à un médiateur de la consommation, dont les coordonnées vous sont communiquées sur simple demande.</p>
 </div></section>`,
 });
 
@@ -429,9 +451,12 @@ ajouter('confidentialite/', {
   corps: () => `
 <section class="section"><div class="cadre etroit texte-riche">
   <h1>Politique de confidentialité</h1>
-  <h2>Les données recueillies</h2><p>Le formulaire de commande ne fait que préparer un message WhatsApp : rien n’est enregistré par le site. Ce que vous m’envoyez ensuite sert uniquement à vous répondre et à traiter votre commande.</p>
-  <h2>Cookies</h2><p>Le site n’utilise ni cookie publicitaire ni mesure d’audience. Les polices de caractères sont fournies par Google Fonts, qui reçoit à cette occasion votre adresse IP.</p>
-  <h2>Vos droits</h2><p>Vous pouvez demander l’accès, la rectification ou la suppression de vos données en écrivant à ${E.nom} par Messenger. Aucune donnée n’est vendue ni cédée.</p>
+  <h2>Responsable</h2><p>${E.dirigeante} (${E.nom}), ${E.ville} — <a href="mailto:${E.email}">${E.email}</a>.</p>
+  <h2>Les données recueillies</h2><p>Le site n’a ni compte client ni base de clients. Le formulaire de commande ne fait que préparer un message WhatsApp : rien n’est enregistré par le site. Ce que vous m’envoyez ensuite (prénom, téléphone, adresse d’envoi, détails de la commande) sert uniquement à vous répondre et à traiter votre commande. Rien n’est vendu ni cédé, et rien ne sert à de la prospection.</p>
+  <h2>Qui y a accès</h2><p>Moi seule, pour traiter votre commande, et le relais Pick Up en cas d’envoi. En écrivant par WhatsApp ou Messenger, vous utilisez le service de Meta, soumis à ses propres conditions. Pour faire fonctionner le site : LocWeb (réalisation et maintenance), GitHub (hébergement des pages) et Supabase (articles et photos, serveurs dans l’Union européenne), qui peuvent recevoir votre adresse IP dans leurs journaux techniques.</p>
+  <h2>Conservation</h2><p>Les échanges liés à une commande sont gardés le temps nécessaire à son suivi et aux garanties, puis supprimés. Les factures sont conservées 10 ans, comme la loi le demande.</p>
+  <h2>Cookies</h2><p>Le site ne dépose aucun cookie, ni publicitaire ni de mesure d’audience : aucun bandeau ne vous est donc demandé. Les polices de caractères sont fournies par Google Fonts, qui reçoit à cette occasion votre adresse IP.</p>
+  <h2>Vos droits</h2><p>Vous pouvez demander l’accès, la rectification ou la suppression de vos données, ou vous opposer à leur traitement, en écrivant à <a href="mailto:${E.email}">${E.email}</a>. Si la réponse ne vous satisfait pas, vous pouvez saisir la CNIL (cnil.fr).</p>
 </div></section>`,
 });
 
