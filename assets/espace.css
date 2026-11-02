@@ -1,0 +1,36 @@
+/* Créa de Chris — son espace. S'appuie sur style.css (couleurs, boutons). */
+.espace { max-width: 760px; margin: 0 auto; padding: 24px 16px 96px; }
+.es-marque { margin: 0; font: 400 1.5rem var(--t-main); color: var(--rose); }
+.es-attente { text-align: center; padding: 48px 0 0; }
+.es-code { max-width: 340px; margin: 12vh auto 0; display: grid; gap: 12px; text-align: center; }
+.es-code h1 { margin: 0; font-size: 2.2rem; }
+.es-code p { margin: 0; }
+.es-code input { padding: 14px; border: 1.5px solid var(--ligne); border-radius: 12px; background: var(--blanc); font: 600 1.5rem var(--t-corps); letter-spacing: .25em; text-align: center; color: var(--encre); }
+.es-alerte { min-height: 1.4em; color: var(--rose-fonce); font-weight: 600; }
+.es-tete { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 12px; margin-bottom: 20px; }
+.es-tete h1 { margin: 0; font-size: 2rem; }
+.es-liens { display: flex; gap: 16px; align-items: center; font-weight: 600; font-size: .95rem; }
+.es-liens button { padding: 0; border: 0; background: none; color: var(--gris); font: inherit; text-decoration: underline; cursor: pointer; }
+.es-bloc { margin-bottom: 20px; padding: 20px 16px; border-radius: var(--rayon); background: var(--blanc); box-shadow: 0 0 0 1.5px var(--ligne); }
+.es-bloc h2 { margin: 0 0 6px; font-size: 1.6rem; }
+.es-bloc h3 { margin: 22px 0 6px; font-size: 1.15rem; }
+.es-bloc-tete { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 8px; }
+.es-aide { margin: 0 0 12px; color: var(--gris); font-size: .95rem; line-height: 1.45; }
+.es-liste { list-style: none; margin: 0; padding: 0; }
+.es-liste li + li { border-top: 1px dashed var(--ligne); }
+.es-article { width: 100%; min-height: 52px; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 6px; border: 0; border-radius: 8px; background: none; color: inherit; font: 600 1rem var(--t-corps); text-align: left; cursor: pointer; }
+.es-article:hover { background: var(--papier); }
+.es-article b { flex: none; font-weight: 600; color: var(--rose-fonce); font-variant-numeric: tabular-nums; }
+.es-form { display: grid; gap: 12px; margin: 10px 0; padding: 14px; border-radius: 12px; background: var(--papier); }
+.es-champ { display: grid; gap: 4px; font-weight: 600; font-size: .95rem; }
+.es-champ small { font-weight: 400; color: var(--gris); }
+.es-champ input, .es-champ select { width: 100%; min-height: 46px; padding: 8px 12px; border: 1.5px solid var(--ligne); border-radius: 10px; background: var(--blanc); color: var(--encre); font: 400 1rem var(--t-corps); }
+.es-champ[hidden] { display: none; }
+.es-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.es-actions .bouton-ligne, .es-attente .bouton-ligne { background: none; }
+.es-supprimer { margin-left: auto; padding: 8px 4px; border: 0; background: none; color: var(--rose-fonce); font: 600 .95rem var(--t-corps); text-decoration: underline; cursor: pointer; }
+.es-horaires { display: grid; gap: 10px; }
+.es-horaires .bouton { justify-self: start; margin-top: 6px; }
+@media (min-width: 560px) { .es-horaires .es-champ { grid-template-columns: 110px 1fr; align-items: center; } }
+.es-bulle { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); margin: 0; padding: 10px 18px; max-width: calc(100% - 32px); border-radius: 999px; background: var(--encre); color: var(--papier); font-weight: 600; text-align: center; }
+.es-bulle.es-erreur { background: var(--rose-fonce); border-radius: 14px; }

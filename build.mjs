@@ -14,7 +14,7 @@ const ICI = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Z]:)
 const PROD = process.env.PROD === '1';
 const URL_SITE = PROD ? 'https://www.creadechris.com/' : 'https://shigyn.github.io/creadechris/';
 const PHOTOS = JSON.parse(fs.readFileSync(path.join(ICI, '_source', 'photos.json'), 'utf8'));
-const V = '11';
+const V = '12';
 
 const E = {
   nom: 'Créa de Chris',
@@ -398,6 +398,12 @@ ajouter('', {
       <ul>
         ${[...MARCHES, {}].map((m, i) => `<li data-marche="${i + 1}"${m.jusquau ? ` data-jusquau="${m.jusquau}" data-texte="${esc(m.quand)}"` : ''}${m.quand ? '' : ' hidden'}><b data-editable-zone="cdc_marche_${i + 1}_quand">${m.quand || ''}</b><span data-editable-zone="cdc_marche_${i + 1}_ou">${m.ou || ''}</span></li>`).join('\n        ')}
       </ul>
+      <div data-horaires hidden>
+        <h3>Mes <em>horaires</em></h3>
+        <ul>
+          ${['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'].map((j) => `<li><b>${j}</b><span data-editable-zone="cdc_horaires_${j.toLowerCase()}">Fermé</span></li>`).join('\n          ')}
+        </ul>
+      </div>
     </div>
   </div>
 </section>`,
@@ -433,6 +439,22 @@ for (const [ch, o] of PAGES) {
   fs.mkdirSync(path.join(ICI, ch), { recursive: true });
   fs.writeFileSync(path.join(ICI, ch, 'index.html'), page(ch, o));
 }
+// Son espace : le catalogue et les horaires (fonction cdc-espace). Jamais indexe.
+fs.mkdirSync(path.join(ICI, 'espace'), { recursive: true });
+fs.writeFileSync(path.join(ICI, 'espace', 'index.html'), `<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>Mon espace — Créa de Chris</title>
+<meta name="theme-color" content="#fbf6f1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..600,100;1,9..144,400..600,100&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&family=Allura&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css?v=${V}"><link rel="stylesheet" href="../assets/espace.css?v=${V}">
+</head><body>
+<main class="espace" id="app"></main>
+<script>window.LOCWEB_CONFIG = { supabaseUrl: 'https://ibqawtgnucakzdldnitj.supabase.co' };</script>
+<script src="../assets/espace.js?v=${V}" defer></script>
+</body></html>
+`);
 fs.writeFileSync(path.join(ICI, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>${abs('')}</loc></url>\n</urlset>\n`);
 fs.writeFileSync(path.join(ICI, 'robots.txt'), PROD ? `User-agent: *\nAllow: /\n\nSitemap: ${URL_SITE}sitemap.xml\n` : `# Apercu : pas d'indexation avant la mise en ligne.\nUser-agent: *\nDisallow: /\n`);
 fs.writeFileSync(path.join(ICI, '.nojekyll'), '');

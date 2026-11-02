@@ -22,6 +22,9 @@
       if (!val) return;
       if (el.tagName === 'IMG') { el.removeAttribute('srcset'); el.removeAttribute('sizes'); el.src = val; } else el.textContent = val;
     });
+    // Les horaires n'apparaissent que si elle en a écrit au moins un.
+    var h = document.querySelector('[data-horaires]');
+    if (h) h.hidden = !Object.keys(v).some(function (c) { return /^cdc_horaires_/.test(c) && v[c]; });
     // Les marchés : une ligne vidée disparaît, une date passée aussi tant qu'elle n'a pas été changée.
     document.querySelectorAll('[data-marche]').forEach(function (li) {
       var n = li.getAttribute('data-marche'), quand = v['cdc_marche_' + n + '_quand'];
