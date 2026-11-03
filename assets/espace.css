@@ -11,6 +11,14 @@
 .es-tete h1 { margin: 0; font-size: 2rem; }
 .es-liens { display: flex; gap: 16px; align-items: center; font-weight: 600; font-size: .95rem; }
 .es-liens button { padding: 0; border: 0; background: none; color: var(--gris); font: inherit; text-decoration: underline; cursor: pointer; }
+.es-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 14px; padding: 5px; border-radius: 14px; background: var(--poudre); }
+.es-menu button { min-height: 46px; border: 0; border-radius: 10px; background: none; color: var(--encre); font: 700 1rem var(--t-corps); cursor: pointer; }
+.es-menu button.on { background: var(--blanc); color: var(--rose-fonce); box-shadow: 0 1px 4px rgba(67, 48, 42, .14); }
+.es-sous-menu { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.es-sous-menu button { min-height: 40px; padding: 7px 13px; border: 1.5px solid var(--ligne); border-radius: 999px; background: var(--blanc); color: var(--encre); font: 600 .92rem var(--t-corps); cursor: pointer; }
+.es-sous-menu button small { color: var(--gris); font-weight: 400; }
+.es-sous-menu button.on { border-color: var(--rose); background: var(--rose); color: #fff; }
+.es-sous-menu button.on small { color: #fff; }
 .es-bloc { margin-bottom: 20px; padding: 20px 16px; border-radius: var(--rayon); background: var(--blanc); box-shadow: 0 0 0 1.5px var(--ligne); }
 .es-bloc h2 { margin: 0 0 6px; font-size: 1.6rem; }
 .es-bloc h3 { margin: 22px 0 6px; font-size: 1.15rem; }

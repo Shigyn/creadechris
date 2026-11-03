@@ -17,6 +17,8 @@
   try { jeton = localStorage.getItem(CLE); } catch (e) {}
   var donnees = { produits: [], horaires: {} };
   var edition = null; // l'id de l'article ouvert, ou 'nouveau'
+  var vue = 'catalogue'; // le menu : catalogue ou horaires
+  var categorie = null; // le sous-menu du catalogue
 
   function appel(action, extra) {
     return fetch(FN, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.assign({ action: action, jeton: jeton }, extra || {})) })
@@ -69,7 +71,7 @@
     return ORDRE.concat(autres, [AUSSI]);
   }
   function formulaire(p) {
-    var cat = p ? p.categorie : '';
+    var cat = p ? p.categorie : categorie;
     var liste = categories();
     return '<form class="es-form" data-form="' + (p ? esc(p.id) : 'nouveau') + '">' +
       '<label class="es-champ"><span>Nom de l’article</span><input name="nom" maxlength="80" required value="' + esc(p ? p.nom : '') + '"></label>' +
@@ -86,22 +88,32 @@
     donnees.produits.forEach(function (p) { (parCat[p.categorie || 'Sans catégorie'] = parCat[p.categorie || 'Sans catégorie'] || []).push(p); });
     var liste = categories();
     if (parCat['Sans catégorie']) liste = liste.concat(['Sans catégorie']);
+    // Les categories qui ont des articles, plus celle ou l'on vient d'en vider une.
+    var pleines = liste.filter(function (c) { return parCat[c]; });
+    if (!categorie || (!parCat[categorie] && edition !== 'nouveau')) categorie = pleines[0] || liste[0];
+
+    var bloc = vue === 'horaires'
+      ? '<section class="es-bloc"><h2>Mes horaires</h2><p class="es-aide">Écrivez comme vous voulez : « 9h – 12h », « Sur rendez-vous ». Un jour vide s’affiche « Fermé ». Si tous les jours sont vides, les horaires n’apparaissent pas sur le site.</p>' +
+        '<form class="es-horaires" data-horaires>' + JOURS.map(function (j) {
+          return '<label class="es-champ"><span>' + majuscule(j) + '</span><input name="' + j + '" maxlength="60" value="' + esc(donnees.horaires[j]) + '"></label>';
+        }).join('') + '<button class="bouton bouton-plein" type="submit">Enregistrer les horaires</button></form></section>'
+      : '<nav class="es-sous-menu" aria-label="Catégories">' + pleines.map(function (c) {
+          return '<button type="button" data-categorie="' + esc(c) + '"' + (c === categorie ? ' class="on" aria-current="true"' : '') + '>' + esc(c) + ' <small>' + parCat[c].length + '</small></button>';
+        }).join('') + '</nav>' +
+        '<section class="es-bloc"><div class="es-bloc-tete"><h2>' + esc(categorie) + '</h2><button class="bouton bouton-plein" type="button" data-ajouter>+ Ajouter un article</button></div>' +
+        '<p class="es-aide">Touchez un article pour le modifier ou le supprimer. Ce que vous changez est sur votre site tout de suite.</p>' +
+        (edition === 'nouveau' ? formulaire(null) : '') +
+        '<ul class="es-liste">' + (parCat[categorie] || []).map(function (p) {
+          return edition === p.id ? '<li>' + formulaire(p) + '</li>'
+            : '<li><button type="button" class="es-article" data-ouvrir="' + esc(p.id) + '"><span>' + esc(p.nom) + '</span><b>' + esc(euros(p.prix)) + '</b></button></li>';
+        }).join('') + '</ul></section>';
+
     app.innerHTML =
       '<header class="es-tete"><div><p class="es-marque">Créa de Chris</p><h1>Mon espace</h1></div>' +
       '<div class="es-liens"><a href="../" target="_blank" rel="noopener">Voir mon site</a><button type="button" data-sortir>Se déconnecter</button></div></header>' +
-      '<section class="es-bloc"><div class="es-bloc-tete"><h2>Mon catalogue</h2><button class="bouton bouton-plein" type="button" data-ajouter>+ Ajouter un article</button></div>' +
-      '<p class="es-aide">Ce que vous changez ici est sur votre site tout de suite. Touchez un article pour le modifier ou le supprimer.</p>' +
-      (edition === 'nouveau' ? formulaire(null) : '') +
-      liste.filter(function (c) { return parCat[c]; }).map(function (c) {
-        return '<h3>' + esc(c) + '</h3><ul class="es-liste">' + parCat[c].map(function (p) {
-          return edition === p.id ? '<li>' + formulaire(p) + '</li>'
-            : '<li><button type="button" class="es-article" data-ouvrir="' + esc(p.id) + '"><span>' + esc(p.nom) + '</span><b>' + esc(euros(p.prix)) + '</b></button></li>';
-        }).join('') + '</ul>';
-      }).join('') + '</section>' +
-      '<section class="es-bloc"><h2>Mes horaires</h2><p class="es-aide">Écrivez comme vous voulez : « 9h – 12h », « Sur rendez-vous ». Un jour vide s’affiche « Fermé ». Si tous les jours sont vides, les horaires n’apparaissent pas sur le site.</p>' +
-      '<form class="es-horaires" data-horaires>' + JOURS.map(function (j) {
-        return '<label class="es-champ"><span>' + majuscule(j) + '</span><input name="' + j + '" maxlength="60" value="' + esc(donnees.horaires[j]) + '"></label>';
-      }).join('') + '<button class="bouton bouton-plein" type="submit">Enregistrer les horaires</button></form></section>' +
+      '<nav class="es-menu" aria-label="Menu">' + [['catalogue', 'Catalogue'], ['horaires', 'Horaires']].map(function (m) {
+        return '<button type="button" data-vue="' + m[0] + '"' + (vue === m[0] ? ' class="on" aria-current="page"' : '') + '>' + m[1] + '</button>';
+      }).join('') + '</nav>' + bloc +
       '<p class="es-bulle" data-bulle role="status" aria-live="polite" hidden></p>';
     var f = app.querySelector('[data-form] input');
     if (f) { f.focus(); f.closest('form').scrollIntoView({ block: 'center' }); }
@@ -112,6 +124,10 @@
     var t = e.target;
     if (t.closest('[data-sortir]')) { sortir(); return; }
     if (t.closest('[data-relancer]')) { charger(); return; }
+    var m = t.closest('[data-vue]');
+    if (m) { vue = m.getAttribute('data-vue'); edition = null; dessiner(); return; }
+    var sm = t.closest('[data-categorie]');
+    if (sm) { categorie = sm.getAttribute('data-categorie'); edition = null; dessiner(); return; }
     if (t.closest('[data-ajouter]')) { edition = 'nouveau'; dessiner(); return; }
     if (t.closest('[data-annuler]')) { edition = null; dessiner(); return; }
     var o = t.closest('[data-ouvrir]');
@@ -145,7 +161,7 @@
         if (nouveau) donnees.produits.push(j.produit);
         else donnees.produits = donnees.produits.map(function (x) { return x.id === id ? j.produit : x; });
         donnees.produits.sort(function (a, c) { return Number(a.prix) - Number(c.prix) || String(a.nom).localeCompare(c.nom, 'fr'); });
-        edition = null; dessiner(); bulle(nouveau ? 'Article ajouté' : 'Article enregistré');
+        edition = null; categorie = j.produit.categorie; dessiner(); bulle(nouveau ? 'Article ajouté' : 'Article enregistré');
       }).catch(function (x) { b.disabled = false; bulle(x.message, true); });
       return;
     }
